@@ -1,0 +1,24 @@
+extends:
+  - airbnb-base
+  - plugin:jest/recommended
+  - plugin:jest/style
+  - plugin:prettier/recommended
+
+env:
+  es2021: true
+  jest: true
+
+plugins:
+  - simple-import-sort
+
+parserOptions:
+  sourceType: module
+
+rules:
+  class-methods-use-this: off
+  import/order: off
+  import/extensions: off
+  no-console: off
+  simple-import-sort/exports: error
+  simple-import-sort/imports: error
+  sort-imports: off
