@@ -1,3 +1,6 @@
+import greet from './index.js';
+
 test('dummmy test', () => {
-  expect(2 * 2).toBe(4);
+  expect(greet()).toBe('Hello world!');
+  expect(greet('Alex')).toBe('Hello Alex!');
 });
