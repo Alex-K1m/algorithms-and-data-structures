@@ -11,3 +11,4 @@ This repo contains implementations of algorithms and data structures written in 
 
 - [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms) - huge thanks to [@trekhleb](https://github.com/trekhleb) for making such an awesome learning resource!
 - [Hexlet](https://hexlet.io/) - programming courses
+- [Programiz](https://www.programiz.com/dsa)

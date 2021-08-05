@@ -1,1 +1,1 @@
-export default (name = 'world') => `Hello ${name}!`;
+console.log('This is a code playground');
