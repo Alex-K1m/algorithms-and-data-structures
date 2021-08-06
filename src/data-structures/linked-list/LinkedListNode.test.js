@@ -13,7 +13,7 @@ describe('LinkedListNode', () => {
     const node = new LinkedListNode();
 
     expect(node.getValue()).toBeNull();
-    expect(node.getNext()).toBeNull();
+    expect(node.getNext()).toBeUndefined();
   });
 
   it('returns a new node on set value/next', () => {

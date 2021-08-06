@@ -13,7 +13,7 @@ export default class LinkedListNode {
   }
 
   getNext() {
-    return this._next;
+    return this._next === null ? undefined : this._next;
   }
 
   /** @arg {*} value */
