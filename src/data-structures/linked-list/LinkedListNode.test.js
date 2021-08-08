@@ -5,30 +5,15 @@ describe('LinkedListNode', () => {
     const next = new LinkedListNode();
     const node = new LinkedListNode(42, next);
 
-    expect(node.getValue()).toBe(42);
-    expect(node.getNext()).toBe(next);
+    expect(node.value).toBe(42);
+    expect(node.next).toBe(next);
   });
 
   it('sets default parameters', () => {
     const node = new LinkedListNode();
 
-    expect(node.getValue()).toBeNull();
-    expect(node.getNext()).toBeUndefined();
-  });
-
-  it('returns a new node on set value/next', () => {
-    const next = new LinkedListNode();
-    const node = new LinkedListNode('current', next);
-    const nodeWithNewValue = node.setValue('new');
-
-    expect(node.getValue()).toBe('current');
-    expect(nodeWithNewValue.getValue()).toBe('new');
-
-    const newNext = new LinkedListNode();
-    const nodeWithNewNext = nodeWithNewValue.setNext(newNext);
-
-    expect(nodeWithNewValue.getNext()).toBe(next);
-    expect(nodeWithNewNext.getNext()).toBe(newNext);
+    expect(node.value).toBeNull();
+    expect(node.next).toBeNull();
   });
 
   it('converts to a primitive', () => {

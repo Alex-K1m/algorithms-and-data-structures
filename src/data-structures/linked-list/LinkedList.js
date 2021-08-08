@@ -5,31 +5,20 @@ export default class LinkedList {
   constructor(array = []) {
     if (array.length === 0) {
       /** @type {LinkedListNode} */
-      this._head = null;
+      this.head = null;
       /** @type {LinkedListNode} */
-      this._last = null;
+      this.last = null;
       return;
     }
 
-    this._last = new LinkedListNode(array[array.length - 1]);
-    this._head = array
+    this.last = new LinkedListNode(array[array.length - 1]);
+    this.head = array
       .slice(0, -1)
-      .reduceRight(
-        (next, value) => new LinkedListNode(value, next),
-        this._last,
-      );
-  }
-
-  getHead() {
-    return this._head;
-  }
-
-  getLast() {
-    return this._last;
+      .reduceRight((next, value) => new LinkedListNode(value, next), this.last);
   }
 
   isEmpty() {
-    return this._head === null;
+    return this.head === null;
   }
 
   [Symbol.toPrimitive]() {
@@ -39,7 +28,7 @@ export default class LinkedList {
      * @return {Array}
      */
     const iterate = (node, acc = []) =>
-      node ? iterate(node.getNext(), [...acc, node.getValue()]) : acc;
-    return iterate(this.getHead()).join(',');
+      node ? iterate(node.next, [...acc, node.value]) : acc;
+    return iterate(this.head).join(',');
   }
 }
