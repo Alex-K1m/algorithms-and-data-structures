@@ -7,8 +7,13 @@ This repo contains implementations of algorithms and data structures written in 
 
 ### So far I've learned
 
+#### Data structures
+
+- [x] [Linked list](/src/data-structures/linked-list/LinkedList.js) [(test)](/src/data-structures/linked-list/LinkedList.test.js)
+
 ### Resources that helped me
 
 - [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms) - huge thanks to [@trekhleb](https://github.com/trekhleb) for making such an awesome learning resource!
 - [Hexlet](https://hexlet.io/) - programming courses
 - [Programiz](https://www.programiz.com/dsa)
+- [The Algorithms](https://the-algorithms.com/) - open source library
