@@ -36,13 +36,15 @@ export default class LinkedList {
   prepend(value) {
     const node = new LinkedListNode(value, this.head);
     this.head = node;
+    if (this.last === null) this.last = node;
     return this;
   }
 
   /** @arg {*} value */
   append(value) {
     const node = new LinkedListNode(value);
-    this.last.next = node;
+    if (this.last === null) this.head = node;
+    else this.last.next = node;
     this.last = node;
     return this;
   }
@@ -55,11 +57,25 @@ export default class LinkedList {
   }
 
   deleteHead() {
-    this.head = this.head.next;
+    if (this.head === null) return this;
+
+    if (this.head.next === null) {
+      this.head = null;
+      this.last = null;
+    } else this.head = this.head.next;
+
     return this;
   }
 
   deleteLast() {
+    if (this.last === null) return this;
+
+    if (this.head.next === null) {
+      this.head = null;
+      this.last = null;
+      return this;
+    }
+
     const iterate = (node = this.head) => {
       if (node.next === this.last) {
         this.last = node;
@@ -69,20 +85,32 @@ export default class LinkedList {
       iterate(node.next);
     };
     iterate();
+
     return this;
   }
 
   /** @arg {*} value */
   delete(value) {
     const iterate = (node = this.head, prevNode = new LinkedListNode()) => {
+      if (node === null) return;
+
       if (node.value === value) {
         // eslint-disable-next-line no-param-reassign
         prevNode.next = node.next;
-        return;
+
+        if (node === this.head) this.head = this.head.next;
+
+        if (this.head === null) this.last = null;
+
+        if (node === this.last) {
+          this.last = prevNode;
+          this.last.next = null;
+        }
       }
       iterate(node.next, node);
     };
     iterate();
+
     return this;
   }
 
@@ -97,7 +125,6 @@ export default class LinkedList {
     return iterate(this.head).join(',');
   }
 
-  /** @return {IterableIterator<number>} */
   *[Symbol.iterator]() {
     const self = this;
     function* iterate(node = self.head) {
