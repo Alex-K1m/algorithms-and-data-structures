@@ -93,7 +93,12 @@ describe('LinkedList', () => {
   });
 
   it('deletes last', () => {
-    const list = new LinkedList([1, 2]).deleteLast();
+    const list = new LinkedList([1, 2, 3]).deleteLast();
+
+    expect(list.last.value).toBe(2);
+    expect(String(list)).toBe('1,2');
+
+    list.deleteLast();
 
     expect(list.last.value).toBe(1);
     expect(list.head).toBe(list.last);
