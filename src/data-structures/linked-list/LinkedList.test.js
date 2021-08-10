@@ -11,13 +11,17 @@ describe('LinkedList', () => {
     expect(list.head.value).toBe(1);
     expect(list.last.value).toBe(true);
     expect(String(list)).toBe(String(items));
+    expect(list.head.next.value).toBe('str');
+    expect(list.last.next).toBeNull();
+
     expect(singleValueList.head).toBe(singleValueList.last);
+    expect(singleValueList.head.next).toBeNull();
   });
 
   it('creates a list from node', () => {
     const node = new LinkedList([1, 2, 3]).head;
     const list = new LinkedList(node);
-    const singleNode = new LinkedList([1]).head;
+    const singleNode = new LinkedListNode(1);
     const singleValueList = new LinkedList(singleNode);
 
     expect(list.isEmpty()).toBe(false);
@@ -42,8 +46,11 @@ describe('LinkedList', () => {
     const singleValueList = new LinkedList().prepend(0);
 
     expect(list.head.value).toBe(0);
+    expect(list.head.next.value).toBe(1);
     expect(String(list)).toBe('0,1,2');
+
     expect(singleValueList.head.value).toBe(0);
+    expect(singleValueList.head.next).toBeNull();
     expect(singleValueList.head).toBe(singleValueList.last);
     expect(String(singleValueList)).toBe('0');
   });
@@ -53,8 +60,11 @@ describe('LinkedList', () => {
     const singleValueList = new LinkedList().append(0);
 
     expect(list.last.value).toBe(3);
+    expect(list.last.next).toBeNull();
     expect(String(list)).toBe('1,2,3');
+
     expect(singleValueList.head.value).toBe(0);
+    expect(singleValueList.last.next).toBeNull();
     expect(singleValueList.head).toBe(singleValueList.last);
     expect(String(singleValueList)).toBe('0');
   });
@@ -71,12 +81,14 @@ describe('LinkedList', () => {
 
     expect(actual).toBeInstanceOf(LinkedListNode);
     expect(actual.value).toBe(2);
+    expect(actual.next.value).toBe(3);
   });
 
   it('deletes head', () => {
     const list = new LinkedList([1, 2]).deleteHead();
 
     expect(list.head.value).toBe(2);
+    expect(list.head.next).toBeNull();
     expect(list.head).toBe(list.last);
 
     list.deleteHead();
@@ -96,6 +108,7 @@ describe('LinkedList', () => {
     const list = new LinkedList([1, 2, 3]).deleteLast();
 
     expect(list.last.value).toBe(2);
+    expect(list.last.next).toBeNull();
     expect(String(list)).toBe('1,2');
 
     list.deleteLast();
@@ -121,16 +134,19 @@ describe('LinkedList', () => {
 
     expect(String(list)).toBe('1,3,4');
     expect(list.head.value).toBe(1);
+    expect(list.head.next.value).toBe(3);
     expect(list.last.value).toBe(4);
 
     list.delete(1);
 
     expect(list.head.value).toBe(3);
+    expect(list.head.next.value).toBe(4);
     expect(String(list)).toBe('3,4');
 
     list.delete(4);
 
     expect(list.last.value).toBe(3);
+    expect(list.last.next).toBeNull();
     expect(String(list)).toBe('3');
 
     list.delete(5);
