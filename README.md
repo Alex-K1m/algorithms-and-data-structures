@@ -10,6 +10,7 @@ This repo contains implementations of algorithms and data structures written in 
 #### Data structures
 
 - [x] [Linked list](/src/data-structures/linked-list/LinkedList.js) [(test)](/src/data-structures/linked-list/LinkedList.test.js)
+  - [x] [Doubly Linked list](/src/data-structures/doubly-linked-list/DoublyLinkedList.js) [(test)](/src/data-structures/doubly-linked-list/DoublyLinkedList.test.js)
 
 ### Resources that helped me
 
@@ -17,3 +18,4 @@ This repo contains implementations of algorithms and data structures written in 
 - [Hexlet](https://hexlet.io/) - programming courses
 - [Programiz](https://www.programiz.com/dsa)
 - [The Algorithms](https://the-algorithms.com/) - open source library
+- [Data structures and algorithms](https://www.youtube.com/playlist?list=PLLXdhg_r2hKA7DPDsunoDZ-Z769jWn4R8) - youtube playlist
