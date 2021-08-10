@@ -86,35 +86,45 @@ export default class DoublyLinkedList {
 
   /** @arg {*} value */
   delete(value) {
-    const iterate = (
-      node = this.head,
-      prevNode = new DoublyLinkedListNode(),
-    ) => {
-      if (node === null) return;
+    const variant = (() => {
+      if (this.isEmpty()) return 'empty';
+      if (this.head === this.last)
+        return this.head.value === value ? 'single' : 'noMatch';
+      if (this.head.value === value) return 'head';
+      if (this.last.value === value) return 'last';
+      return 'between';
+    })();
 
+    const iterate = (node = this.head.next) => {
+      if (node === this.last) return;
       if (node.value === value) {
         // eslint-disable-next-line no-param-reassign
-        prevNode.next = node.next;
+        node.prev.next = node.next;
         // eslint-disable-next-line no-param-reassign
-        if (node.next !== null) node.next.prev = prevNode;
-
-        if (node === this.head) {
-          this.head = this.head.next;
-          if (this.head !== null) this.head.prev = null;
-        }
-
-        if (this.head === null) this.last = null;
-
-        if (node === this.last) {
-          this.last = prevNode;
-          this.last.next = null;
-        }
+        node.next.prev = node.prev;
       }
-      iterate(node.next, node);
+      iterate(node.next);
     };
-    iterate();
 
-    return this;
+    switch (variant) {
+      case 'single':
+        this.head = null;
+        this.last = null;
+        return this;
+      case 'head':
+        this.head = this.head.next;
+        this.head.prev = null;
+        return this.delete(value);
+      case 'last':
+        this.last = this.last.prev;
+        this.last.next = null;
+        return this.delete(value);
+      case 'between':
+        iterate();
+        return this;
+      default:
+        return this;
+    }
   }
 
   [Symbol.toPrimitive]() {
