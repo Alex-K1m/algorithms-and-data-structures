@@ -35,15 +35,15 @@ export default class DoublyLinkedList {
   /** @arg {*} value */
   prepend(value) {
     const node = new DoublyLinkedListNode(value, this.head);
+    if (this.isEmpty()) this.last = node;
     this.head = node;
-    if (this.last === null) this.last = node;
     return this;
   }
 
   /** @arg {*} value */
   append(value) {
     const node = new DoublyLinkedListNode(value, null, this.last);
-    if (this.last === null) this.head = node;
+    if (this.isEmpty()) this.head = node;
     else this.last.next = node;
     this.last = node;
     return this;
@@ -57,7 +57,7 @@ export default class DoublyLinkedList {
   }
 
   deleteHead() {
-    if (this.head === null) return this;
+    if (this.isEmpty()) return this;
 
     if (this.head.next === null) {
       this.head = null;
@@ -71,7 +71,7 @@ export default class DoublyLinkedList {
   }
 
   deleteLast() {
-    if (this.last === null) return this;
+    if (this.isEmpty()) return this;
 
     if (this.head.next === null) {
       this.head = null;

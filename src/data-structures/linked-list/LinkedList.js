@@ -35,15 +35,15 @@ export default class LinkedList {
   /** @arg {*} value */
   prepend(value) {
     const node = new LinkedListNode(value, this.head);
+    if (this.isEmpty()) this.last = node;
     this.head = node;
-    if (this.last === null) this.last = node;
     return this;
   }
 
   /** @arg {*} value */
   append(value) {
     const node = new LinkedListNode(value);
-    if (this.last === null) this.head = node;
+    if (this.isEmpty()) this.head = node;
     else this.last.next = node;
     this.last = node;
     return this;
@@ -57,7 +57,7 @@ export default class LinkedList {
   }
 
   deleteHead() {
-    if (this.head === null) return this;
+    if (this.isEmpty()) return this;
 
     if (this.head.next === null) {
       this.head = null;
@@ -68,7 +68,7 @@ export default class LinkedList {
   }
 
   deleteLast() {
-    if (this.last === null) return this;
+    if (this.isEmpty()) return this;
 
     if (this.head.next === null) {
       this.head = null;
@@ -100,7 +100,7 @@ export default class LinkedList {
 
         if (node === this.head) this.head = this.head.next;
 
-        if (this.head === null) this.last = null;
+        if (this.isEmpty()) this.last = null;
 
         if (node === this.last) {
           this.last = prevNode;
