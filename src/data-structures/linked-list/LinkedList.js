@@ -49,10 +49,19 @@ export default class LinkedList {
     return this;
   }
 
-  /** @arg {*} value */
-  find(value) {
-    const iterate = (node = this.head) =>
-      node && node.value === value ? node : iterate(node.next);
+  /**
+   * @arg {*} arg
+   * @return {LinkedListNode}
+   */
+  find(arg) {
+    const iterate = (node = this.head) => {
+      if (!node) return null;
+
+      const equals =
+        typeof arg === 'function' ? arg(node.value) : node.value === arg;
+      return equals ? node : iterate(node.next);
+    };
+
     return iterate();
   }
 

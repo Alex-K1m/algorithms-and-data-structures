@@ -77,11 +77,16 @@ describe('LinkedList', () => {
   });
 
   it('finds a node by value', () => {
-    const actual = new LinkedList([1, 2, 3]).find(2);
+    const list = new LinkedList([1, 2, 3]);
+    const actual = list.find(2);
 
     expect(actual).toBeInstanceOf(LinkedListNode);
     expect(actual.value).toBe(2);
     expect(actual.next.value).toBe(3);
+
+    expect(list.find(4)).toBeNull();
+
+    expect(list.find((val) => typeof val === 'number').value).toBe(1);
   });
 
   it('deletes head', () => {
