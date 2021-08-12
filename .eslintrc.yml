@@ -12,6 +12,7 @@ plugins:
   - simple-import-sort
 
 parserOptions:
+  ecmaVersion: 2021
   sourceType: module
 
 rules:
