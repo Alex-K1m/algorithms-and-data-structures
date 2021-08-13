@@ -12,7 +12,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "format": "prettier --check \"**/*.{json,yml,yaml,md}\"",
+    "format": "prettier --ignore-path .gitignore --check \"**/*.{json,yml,yaml,md}\"",
     "format:fix": "npm run format -- --write",
     "lint": "eslint ./src",
     "lint:fix": "npm run format -- --fix",
