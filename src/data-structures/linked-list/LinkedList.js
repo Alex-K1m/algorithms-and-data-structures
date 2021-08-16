@@ -98,12 +98,15 @@ export default class LinkedList {
     return this;
   }
 
-  /** @arg {*} value */
-  delete(value) {
+  /** @arg {*} arg */
+  delete(arg) {
     const iterate = (node = this.head, prevNode = new LinkedListNode()) => {
       if (node === null) return;
 
-      if (node.value === value) {
+      const equals =
+        typeof arg === 'function' ? arg(node.value) : node.value === arg;
+
+      if (equals) {
         // eslint-disable-next-line no-param-reassign
         prevNode.next = node.next;
 

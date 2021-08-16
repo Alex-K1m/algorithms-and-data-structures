@@ -148,7 +148,7 @@ describe('LinkedList', () => {
     expect(list.head.next.value).toBe(4);
     expect(String(list)).toBe('3,4');
 
-    list.delete(4);
+    list.delete((val) => val === 4);
 
     expect(list.last.value).toBe(3);
     expect(list.last.next).toBeNull();
