@@ -13,6 +13,7 @@ This repo contains implementations of algorithms and data structures written in 
   - [x] [Doubly Linked list](/src/data-structures/doubly-linked-list/DoublyLinkedList.js) [(test)](/src/data-structures/doubly-linked-list/DoublyLinkedList.test.js)
 - [x] [Stack](/src/data-structures/stack/Stack.js) [(test)](/src/data-structures/stack/Stack.test.js)
 - [x] [Queue](/src/data-structures/queue/Queue.js) [(test)](/src/data-structures/queue/Queue.test.js)
+- [x] [Hash table](/src/data-structures/hash-table/HashTable.js) [(test)](/src/data-structures/hash-table/HashTable.test.js)
 
 ### Resources that helped me
 
