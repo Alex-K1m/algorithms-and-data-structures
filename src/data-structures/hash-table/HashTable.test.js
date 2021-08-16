@@ -28,6 +28,7 @@ describe('HashTable', () => {
     expect(hashTable._hash('b')).toBe(8);
     expect(hashTable._hash('k')).toBe(7);
     expect(hashTable._hash('l')).toBe(8);
+    expect(hashTable._hash('ab')).toBe(5);
   });
 
   it('converts to string', () => {

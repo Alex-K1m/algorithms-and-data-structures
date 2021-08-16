@@ -84,7 +84,10 @@ export default class DoublyLinkedList {
     return this;
   }
 
-  /** @arg {*} value */
+  /**
+   * @arg {*} value
+   * @return {DoublyLinkedList}
+   */
   delete(value) {
     const variant = (() => {
       if (this.isEmpty()) return 'empty';

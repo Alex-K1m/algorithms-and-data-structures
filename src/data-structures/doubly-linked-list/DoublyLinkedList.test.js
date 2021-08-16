@@ -143,6 +143,7 @@ describe('DoublyLinkedList', () => {
 
   it('deletes nodes by value', () => {
     const list = new DoublyLinkedList([1, 2, 3, 2, 4]).delete(2);
+    const emptyList = new DoublyLinkedList().delete(1);
 
     expect(String(list)).toBe('1,3,4');
     expect(list.head.value).toBe(1);
@@ -175,5 +176,7 @@ describe('DoublyLinkedList', () => {
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeNull();
     expect(list.last).toBeNull();
+
+    expect(emptyList.isEmpty()).toBe(true);
   });
 });
