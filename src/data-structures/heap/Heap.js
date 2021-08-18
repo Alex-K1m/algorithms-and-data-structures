@@ -1,10 +1,14 @@
+import Comparator from '../../utils/Comparator.js';
+
 export default class Heap {
-  /** @arg {{ type?: 'max' | 'min' }} options */
-  constructor({ type = 'max' } = {}) {
-    // TODO type
-    this._compare = (val1, val2) =>
-      type === 'min' ? val1 < val2 : val1 > val2;
-    /** @type {number[]} */
+  /** @arg {'max' | 'min' | Comparator} compare */
+  constructor(compare = 'max') {
+    this._compare = (() => {
+      if (compare === 'max') return new Comparator();
+      if (compare === 'min') return new Comparator().reverse();
+      return compare;
+    })();
+
     this._container = [];
   }
 
@@ -28,15 +32,15 @@ export default class Heap {
     [arr[index2], arr[index1]] = [arr[index1], arr[index2]];
   }
 
-  _heapifyUp(startIndex = this._container.length - 1) {
+  _heapifyUp(startIndex = this.size - 1) {
     const iterate = (index) => {
-      if (index === -1) return;
+      const parentIndex = this._getParentIndex(index);
+      if (parentIndex === -1) return;
 
       const value = this._container[index];
-      const parentIndex = this._getParentIndex(index);
       const parentValue = this._container[parentIndex];
 
-      if (this._compare(value, parentValue)) {
+      if (this._compare.greater(value, parentValue)) {
         this._swap(index, parentIndex);
       }
 
@@ -48,13 +52,13 @@ export default class Heap {
 
   _heapifyDown(startIndex = 0) {
     const iterate = (index) => {
-      if (index === -1) return;
+      const childIndex = this._getChildIndex(index);
+      if (childIndex === -1) return;
 
       const value = this._container[index];
-      const childIndex = this._getChildIndex(index);
       const childValue = this._container[childIndex];
 
-      if (this._compare(childValue, value)) {
+      if (this._compare.greater(childValue, value)) {
         this._swap(index, childIndex);
       }
 
@@ -68,7 +72,7 @@ export default class Heap {
     return this._container[0];
   }
 
-  /** @arg {number} value */
+  /** @arg {*} value */
   add(value) {
     this._container.push(value);
     this._heapifyUp();
@@ -86,11 +90,13 @@ export default class Heap {
   }
 
   /**
-   * @arg {number} value
+   * @arg {*} value
    * @return {this}
    */
   delete(value) {
-    const index = this._container.findIndex((val) => val === value);
+    const index = this._container.findIndex((val) =>
+      this._compare.equal(val, value),
+    );
     if (index === -1) return this;
 
     this._swap(index, this.size - 1);
@@ -100,7 +106,7 @@ export default class Heap {
     const parentIndex = this._getParentIndex(index);
     const parentValue = this._container[parentIndex];
 
-    if (parentIndex === -1 || this._compare(parentValue, newValue))
+    if (parentIndex === -1 || this._compare.greater(parentValue, newValue))
       this._heapifyDown(index);
     else this._heapifyUp(index);
 

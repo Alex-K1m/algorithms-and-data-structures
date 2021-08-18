@@ -1,3 +1,4 @@
+import Comparator from '../../utils/Comparator.js';
 import Heap from './Heap.js';
 
 describe('Heap', () => {
@@ -11,7 +12,7 @@ describe('Heap', () => {
 
   it('adds a new value', () => {
     const maxHeap = new Heap().add(10);
-    const minHeap = new Heap({ type: 'min' }).add(10).add(15).add(5);
+    const minHeap = new Heap('min').add(10).add(15).add(5);
 
     expect(maxHeap.size).toBe(1);
     expect(maxHeap.peek()).toBe(10);
@@ -66,7 +67,7 @@ describe('Heap', () => {
 
   it('extracts the root value', () => {
     const maxHeap = new Heap();
-    const minHeap = new Heap({ type: 'min' }).add(5).add(10).add(15);
+    const minHeap = new Heap('min').add(5).add(10).add(15);
 
     expect(maxHeap.poll()).toBeUndefined();
 
@@ -116,5 +117,20 @@ describe('Heap', () => {
     expect(String(maxHeap.delete(1))).toBe('8,7');
     expect(String(maxHeap.delete(7))).toBe('8');
     expect(String(maxHeap.delete(8))).toBe('');
+  });
+
+  it('works correcty with custom comparator', () => {
+    const comparator = new Comparator((a, b) => {
+      if (a[0] === b[0]) return 0;
+      return a[0] > b[0] ? 1 : -1;
+    });
+    const maxHeap = new Heap(comparator);
+    maxHeap.add([10]).add([5]).add([15]).add([12]).add([20]).add([5]);
+
+    expect(String(maxHeap)).toBe('20,15,10,5,12,5');
+    expect(maxHeap.peek()).toEqual([20]);
+    expect(String(maxHeap.add([25]))).toBe('25,15,20,5,12,5,10');
+    expect(maxHeap.poll()).toEqual([25]);
+    expect(String(maxHeap.delete([5]))).toBe('15,12,20,10');
   });
 });
