@@ -51,6 +51,7 @@ describe('DoublyLinkedList', () => {
     expect(list.head.value).toBe(0);
     expect(list.head.next.value).toBe(1);
     expect(list.head.prev).toBeNull();
+    expect(list.head.next.prev).toBe(list.head);
     expect(String(list)).toBe('0,1,2');
 
     expect(singleValueList.head.value).toBe(0);

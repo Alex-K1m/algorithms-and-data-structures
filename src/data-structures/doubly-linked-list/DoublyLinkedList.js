@@ -36,6 +36,7 @@ export default class DoublyLinkedList {
   prepend(value) {
     const node = new DoublyLinkedListNode(value, this.head);
     if (this.isEmpty()) this.last = node;
+    else this.head.prev = node;
     this.head = node;
     return this;
   }
