@@ -62,4 +62,22 @@ describe('BinarySearchTreeNode', () => {
 
     expect([...node]).toEqual([0, 1, 2, 3, 4]);
   });
+
+  it('uses custom compare function', () => {
+    const compareFn = (a, b) => {
+      if (a.value === b.value) return 0;
+      return a.value > b.value ? 1 : -1;
+    };
+    const node = new BinarySearchTreeNode({ value: 2 }, compareFn)
+      .insert({ value: 1 })
+      .insert({ value: 4 })
+      .insert({ value: 0 })
+      .insert({ value: 3 });
+
+    expect(node.value).toEqual({ value: 2 });
+    expect(node.left.value).toEqual({ value: 1 });
+    expect(node.right.value).toEqual({ value: 4 });
+    expect(node.left.left.value).toEqual({ value: 0 });
+    expect(node.right.left.value).toEqual({ value: 3 });
+  });
 });
