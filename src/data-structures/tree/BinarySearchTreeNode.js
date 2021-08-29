@@ -4,17 +4,31 @@ export default class BinarySearchTreeNode {
     this.value = value;
 
     /** @type {BinarySearchTreeNode} */
+    this.parent = null;
+    /** @type {BinarySearchTreeNode} */
     this.left = null;
     /** @type {BinarySearchTreeNode} */
     this.right = null;
   }
 
+  /**
+   * @arg {'left' | 'right'} child
+   * @arg {BinarySearchTreeNode} node
+   */
+  setChild(child, node) {
+    if (this[child]) this[child].parent = null;
+    this[child] = node;
+    if (this[child]) this[child].parent = this;
+
+    return this;
+  }
+
   /** @arg {number} value */
   insert(value) {
-    const node = value < this.value ? 'left' : 'right';
+    const child = value < this.value ? 'left' : 'right';
 
-    if (this[node]) this[node].insert(value);
-    else this[node] = new BinarySearchTreeNode(value);
+    if (this[child]) this[child].insert(value);
+    else this.setChild(child, new BinarySearchTreeNode(value));
 
     return this;
   }
@@ -23,8 +37,8 @@ export default class BinarySearchTreeNode {
   contains(value) {
     if (value === this.value) return true;
 
-    const node = value < this.value ? 'left' : 'right';
-    return this[node] ? this[node].contains(value) : false;
+    const child = value < this.value ? 'left' : 'right';
+    return this[child] ? this[child].contains(value) : false;
   }
 
   *[Symbol.iterator]() {
