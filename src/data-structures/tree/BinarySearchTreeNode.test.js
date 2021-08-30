@@ -80,4 +80,57 @@ describe('BinarySearchTreeNode', () => {
     expect(node.left.left.value).toEqual({ value: 0 });
     expect(node.right.left.value).toEqual({ value: 3 });
   });
+
+  it('finds a node by value', () => {
+    const node = new BinarySearchTreeNode(2)
+      .insert(1)
+      .insert(4)
+      .insert(0)
+      .insert(3);
+    const nodeFor2 = node.find(2);
+
+    expect(nodeFor2).toBeInstanceOf(BinarySearchTreeNode);
+    expect(nodeFor2.value).toBe(2);
+    expect(nodeFor2.parent).toBeNull();
+    expect(nodeFor2.left.value).toBe(1);
+    expect(nodeFor2.right.value).toBe(4);
+
+    const nodeFor4 = node.find(4);
+
+    expect(nodeFor4).toBeInstanceOf(BinarySearchTreeNode);
+    expect(nodeFor4.value).toBe(4);
+    expect(nodeFor4.parent).toBe(node);
+    expect(nodeFor4.left.value).toBe(3);
+    expect(nodeFor4.right).toBeNull();
+
+    const nodeFor0 = node.find(0);
+
+    expect(nodeFor0).toBeInstanceOf(BinarySearchTreeNode);
+    expect(nodeFor0.value).toBe(0);
+    expect(nodeFor0.parent).toBe(node.left);
+    expect(nodeFor0.left).toBeNull();
+    expect(nodeFor0.right).toBeNull();
+
+    const actualFor5 = node.find(5);
+
+    expect(actualFor5).toBeUndefined();
+  });
+
+  it('finds minimum and maximum', () => {
+    const node = new BinarySearchTreeNode(2)
+      .insert(1)
+      .insert(4)
+      .insert(0)
+      .insert(3);
+    const singleNode = new BinarySearchTreeNode(1);
+
+    expect(node.findMin()).toBeInstanceOf(BinarySearchTreeNode);
+    expect(node.findMin().value).toBe(0);
+
+    expect(node.findMax()).toBeInstanceOf(BinarySearchTreeNode);
+    expect(node.findMax().value).toBe(4);
+
+    expect(singleNode.findMin().value).toBe(1);
+    expect(singleNode.findMin()).toBe(singleNode.findMax());
+  });
 });

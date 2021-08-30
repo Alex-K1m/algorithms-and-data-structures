@@ -39,12 +39,35 @@ export default class BinarySearchTreeNode {
     return this;
   }
 
-  /** @arg {*} value */
+  /**
+   * @arg {*} value
+   * @return {boolean}
+   */
   contains(value) {
-    if (this.compare.equal(value, this.value)) return true;
+    return !!this.find(value);
+  }
+
+  /**
+   * @arg {*} value
+   * @return {BinarySearchTreeNode | undefined}
+   */
+  find(value) {
+    if (this.compare.equal(value, this.value)) return this;
 
     const child = this.compare.less(value, this.value) ? 'left' : 'right';
-    return this[child] ? this[child].contains(value) : false;
+    return this[child] ? this[child].find(value) : undefined;
+  }
+
+  /** @return {BinarySearchTreeNode} */
+  findMin() {
+    if (!this.left) return this;
+    return this.left.findMin();
+  }
+
+  /** @return {BinarySearchTreeNode} */
+  findMax() {
+    if (!this.right) return this;
+    return this.right.findMax();
   }
 
   *[Symbol.iterator]() {
