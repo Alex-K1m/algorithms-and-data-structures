@@ -18,23 +18,33 @@ export default class BinarySearchTreeNode {
   }
 
   /**
-   * @arg {'left' | 'right'} child
+   * @arg {'left' | 'right'} side
    * @arg {BinarySearchTreeNode} node
    */
-  setChild(child, node) {
-    if (this[child]) this[child].parent = null;
-    this[child] = node;
-    if (this[child]) this[child].parent = this;
+  setChild(side, node) {
+    if (this[side]) this[side].parent = null;
+    this[side] = node;
+    if (node) this[side].parent = this;
 
     return this;
   }
 
+  /** @arg {BinarySearchTreeNode} node */
+  setLeft(node) {
+    return this.setChild('left', node);
+  }
+
+  /** @arg {BinarySearchTreeNode} node */
+  setRight(node) {
+    return this.setChild('right', node);
+  }
+
   /** @arg {*} value */
   insert(value) {
-    const child = this.compare.less(value, this.value) ? 'left' : 'right';
+    const side = this.compare.less(value, this.value) ? 'left' : 'right';
 
-    if (this[child]) this[child].insert(value);
-    else this.setChild(child, new BinarySearchTreeNode(value));
+    if (this[side]) this[side].insert(value);
+    else this.setChild(side, new BinarySearchTreeNode(value));
 
     return this;
   }
@@ -54,8 +64,8 @@ export default class BinarySearchTreeNode {
   find(value) {
     if (this.compare.equal(value, this.value)) return this;
 
-    const child = this.compare.less(value, this.value) ? 'left' : 'right';
-    return this[child] ? this[child].find(value) : undefined;
+    const side = this.compare.less(value, this.value) ? 'left' : 'right';
+    return this[side] ? this[side].find(value) : undefined;
   }
 
   /** @return {BinarySearchTreeNode} */
@@ -68,6 +78,16 @@ export default class BinarySearchTreeNode {
   findMax() {
     if (!this.right) return this;
     return this.right.findMax();
+  }
+
+  getChildrenNumber() {
+    return Number(!!this.left) + Number(!!this.right);
+  }
+
+  get side() {
+    if (this.parent?.left === this) return 'left';
+    if (this.parent?.right === this) return 'right';
+    return null;
   }
 
   *[Symbol.iterator]() {

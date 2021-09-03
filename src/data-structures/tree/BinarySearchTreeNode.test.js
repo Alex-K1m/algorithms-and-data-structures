@@ -133,4 +133,35 @@ describe('BinarySearchTreeNode', () => {
     expect(singleNode.findMin().value).toBe(1);
     expect(singleNode.findMin()).toBe(singleNode.findMax());
   });
+
+  it('shows the number of children', () => {
+    const node = new BinarySearchTreeNode(2).insert(1).insert(4).insert(0);
+
+    expect(node.getChildrenNumber()).toBe(2);
+    expect(node.left.getChildrenNumber()).toBe(1);
+    expect(node.right.getChildrenNumber()).toBe(0);
+  });
+
+  it("shows if it's left or right node of its parent", () => {
+    const node = new BinarySearchTreeNode(2).insert(1).insert(4);
+
+    expect(node.side).toBeNull();
+    expect(node.left.side).toBe('left');
+    expect(node.right.side).toBe('right');
+  });
+
+  it('sets a child node', () => {
+    const nodeA = new BinarySearchTreeNode(1);
+    const nodeB = new BinarySearchTreeNode(3);
+    const nodeC = new BinarySearchTreeNode(2);
+
+    expect(nodeA.setRight(nodeB).right).toBe(nodeB);
+    expect(nodeB.parent).toBe(nodeA);
+
+    expect(nodeB.setLeft(nodeC).left).toBe(nodeC);
+    expect(nodeC.parent).toBe(nodeB);
+
+    expect(nodeA.setRight(null).right).toBeNull();
+    expect(nodeB.parent).toBeNull();
+  });
 });
