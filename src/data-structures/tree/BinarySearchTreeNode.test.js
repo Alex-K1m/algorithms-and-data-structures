@@ -164,4 +164,66 @@ describe('BinarySearchTreeNode', () => {
     expect(nodeA.setRight(null).right).toBeNull();
     expect(nodeB.parent).toBeNull();
   });
+
+  it('removes a node by value', () => {
+    const node = new BinarySearchTreeNode(3)
+      .insert(1)
+      .insert(5)
+      .insert(0)
+      .insert(2)
+      .insert(4)
+      .insert(6);
+
+    expect(node.remove(3).value).toBe(4);
+    expect(node.left.value).toBe(1);
+    expect(node.right.value).toBe(5);
+    expect(node.parent).toBeNull();
+    expect(node.right.left).toBeNull();
+    // 4
+    // 1   5
+    // 0 2   6
+
+    expect(node.remove(1).left.value).toBe(2);
+    expect(node.left.left.value).toBe(0);
+    expect(node.left.right).toBeNull();
+    expect(node.left.parent).toBe(node);
+    // 4
+    // 2   5
+    // 0     6
+
+    expect(node.remove(4).value).toBe(5);
+    expect(node.left.value).toBe(2);
+    expect(node.right.value).toBe(6);
+    expect(node.parent).toBeNull();
+    expect(node.right.parent).toBe(node);
+    // 5
+    // 2   6
+    // 0
+
+    expect(node.remove(2).left.value).toBe(0);
+    expect(node.left.left).toBeNull();
+    expect(node.left.right).toBeNull();
+    expect(node.left.parent).toBe(node);
+    // 5
+    // 0   6
+
+    expect(node.remove(6).right).toBeNull();
+    // 5
+    // 0
+
+    expect(node.remove(5).value).toBe(0);
+    expect(node.left).toBeNull();
+    expect(node.right).toBeNull();
+    expect(node.parent).toBeNull();
+    // 0
+
+    expect(node.insert(1).remove(0).value).toBe(1);
+
+    expect(node.remove(-1).value).toBe(1);
+    expect(node.left).toBeNull();
+    expect(node.right).toBeNull();
+    expect(node.parent).toBeNull();
+
+    expect(node.remove(1)).toBeNull();
+  });
 });

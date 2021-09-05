@@ -90,6 +90,64 @@ export default class BinarySearchTreeNode {
     return null;
   }
 
+  /** @arg {*} value */
+  remove(value) {
+    /**
+     * Node to remove
+     * @type {BinarySearchTreeNode}
+     */
+    const node = this.find(value);
+
+    if (!node) return this;
+    if (this.getChildrenNumber() === 0) return null;
+
+    switch (node.getChildrenNumber()) {
+      case 0: {
+        node.parent.setChild(node.side, null);
+        break;
+      }
+
+      case 1: {
+        const child = node[node.left ? 'left' : 'right'];
+
+        if (node.parent) {
+          node.parent.setChild(node.side, child);
+        } else {
+          node.value = child.value;
+          node.setLeft(child.left).setRight(child.right);
+        }
+
+        break;
+      }
+
+      case 2: {
+        /** Node with the next bigger value */
+        const nextNode = node.right.findMin();
+
+        if (!this.compare.equal(nextNode, node.right)) {
+          this.remove(nextNode.value);
+          node.value = nextNode.value;
+          break;
+        }
+
+        // nextNode === node.right, this also means there's no node.right.left
+        if (node.parent) {
+          node.parent.setChild(node.side, nextNode);
+          nextNode.setLeft(node.left);
+        } else {
+          node.value = nextNode.value;
+          node.setRight(nextNode.right);
+        }
+
+        break;
+      }
+
+      // no default
+    }
+
+    return this;
+  }
+
   *[Symbol.iterator]() {
     if (this.left) yield* this.left[Symbol.iterator]();
     yield this.value;
