@@ -187,3 +187,34 @@ Can be implemented with array
 |      1       | log n  |   log n   |  log n   |
 
 [🠕 data-structures](#data-structures)
+
+### Binary search tree
+
+_Tree_ is an abstract data type — or data structure implementing this ADT — that simulates a hierarchical tree structure, with a root value and subtrees of children with a parent node, represented as a set of linked nodes.
+
+In a _binary tree_ each node has no more than 2 children (left & right).
+
+A _binary search tree_ follows a specific ordering property - on any subtree the left nodes are less than the root node, which is less than all the right nodes.
+Could be balanced - has roughly the same number of nodes on the both sides of a subtree - and unbalanced (sequence). Can be traversed in 3 ways (for a<-b->c):
+
+- inorder `abc` - typical case, allows traversing in order from min to max
+- preorder `bac`
+- postorder `acb`
+
+Common interface:
+
+- `left`
+- `right`
+- `parent`
+- `insert(value)`
+- `find(value)` or min/max
+- `contains(value)`
+- `remove(value)`
+
+Can be used to implement ADTs: tree
+
+|  Access  |  Search  | Insertion | Deletion |
+| :------: | :------: | :-------: | :------: |
+| log n, n | log n, n | log n, n  | log n, n |
+
+[🠕 data-structures](#data-structures)
