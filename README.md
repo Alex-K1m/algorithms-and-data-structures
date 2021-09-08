@@ -17,6 +17,8 @@ This repo contains implementations of algorithms and data structures written in 
   - [x] [Deque](/src/data-structures/deque/Deque.js) • [test](/src/data-structures/deque/Deque.test.js) • [cheat sheet](#deque)
 - [x] [Hash table](/src/data-structures/hash-table/HashTable.js) • [test](/src/data-structures/hash-table/HashTable.test.js) • [cheat sheet](#hash-table)
 - [x] [Heap](/src/data-structures/heap/Heap.js) • [test](/src/data-structures/heap/Heap.test.js) • [cheat sheet](#heap)
+- Tree
+  - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTreeNode.js) • [test](/src/data-structures/tree/BinarySearchTreeNode.test.js) • [cheat sheet](#binary-search-tree)
 
 ## Resources
 
