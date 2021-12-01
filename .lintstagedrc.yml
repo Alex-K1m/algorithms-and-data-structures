@@ -1,4 +1,4 @@
-'!(*test).js':
+'!(*test).{j,t}s':
   - eslint --fix
   - jest --findRelatedTests
 '*.{json,yml,yaml,md}': prettier --write
