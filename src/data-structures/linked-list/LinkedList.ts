@@ -1,12 +1,15 @@
-import LinkedListNode from './LinkedListNode.js';
+import LinkedListNode from './LinkedListNode';
 
-export default class LinkedList {
-  /** @arg {Array | LinkedListNode} [list] */
-  constructor(list) {
+export default class LinkedList<T> implements Iterable<T> {
+  head: LinkedListNode<T> | null;
+
+  last: typeof this.head;
+
+  constructor(list?: T[] | LinkedListNode<T>) {
     if (list instanceof LinkedListNode) {
       this.head = list;
-      this.last = (function iterate(node = list) {
-        return node.next === null ? node : iterate(node.next);
+      this.last = (function iterate(node = list): LinkedListNode<T> {
+        return node.next?.hasNext() ? iterate(node.next) : node;
       })();
       return;
     }
@@ -22,89 +25,92 @@ export default class LinkedList {
       return;
     }
 
-    /** @type {LinkedListNode} */
     this.head = null;
-    /** @type {LinkedListNode} */
     this.last = null;
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this.head === null;
   }
 
-  /** @arg {*} value */
-  prepend(value) {
+  prepend(value: T): this {
     const node = new LinkedListNode(value, this.head);
+
     if (this.isEmpty()) this.last = node;
     this.head = node;
+
     return this;
   }
 
-  /** @arg {*} value */
-  append(value) {
+  append(value: T): this {
     const node = new LinkedListNode(value);
+
     if (this.isEmpty()) this.head = node;
-    else this.last.next = node;
+    else this.last!.next = node;
     this.last = node;
+
     return this;
   }
 
-  /**
-   * @arg {*} arg
-   * @return {LinkedListNode}
-   */
-  find(arg) {
-    const iterate = (node = this.head) => {
+  find(value: T): LinkedListNode<T> | null;
+  find(callback: (value: T) => boolean): LinkedListNode<T> | null;
+  find(arg: T | ((value: T) => boolean)): LinkedListNode<T> | null {
+    const iterate = (node = this.head): LinkedListNode<T> | null => {
       if (!node) return null;
 
       const equals =
-        typeof arg === 'function' ? arg(node.value) : node.value === arg;
+        arg instanceof Function ? arg(node.value) : node.value === arg;
       return equals ? node : iterate(node.next);
     };
 
     return iterate();
   }
 
-  deleteHead() {
+  deleteHead(): this {
     if (this.isEmpty()) return this;
 
-    if (this.head.next === null) {
+    if (this.head!.hasNext()) this.head = this.head!.next;
+    else {
       this.head = null;
       this.last = null;
-    } else this.head = this.head.next;
+    }
 
     return this;
   }
 
-  deleteLast() {
+  deleteLast(): this {
     if (this.isEmpty()) return this;
 
-    if (this.head.next === null) {
+    if (!this.head!.hasNext()) {
       this.head = null;
       this.last = null;
       return this;
     }
 
     const iterate = (node = this.head) => {
-      if (node.next === this.last) {
+      if (node!.next === this.last) {
         this.last = node;
-        this.last.next = null;
+        this.last!.next = null;
         return;
       }
-      iterate(node.next);
+      iterate(node!.next);
     };
     iterate();
 
     return this;
   }
 
-  /** @arg {*} arg */
-  delete(arg) {
-    const iterate = (node = this.head, prevNode = new LinkedListNode()) => {
+  delete(value: T): this;
+  delete(callback: (value: T) => boolean): this;
+  delete(arg: T | ((value: T) => boolean)): this {
+    const iterate = (
+      node = this.head,
+      prevNode = new LinkedListNode<unknown>(null) as LinkedListNode<T>,
+    ) => {
       if (node === null) return;
 
       const equals =
-        typeof arg === 'function' ? arg(node.value) : node.value === arg;
+        arg instanceof Function ? arg(node.value) : node.value === arg;
 
       if (equals) {
         // eslint-disable-next-line no-param-reassign
@@ -126,24 +132,18 @@ export default class LinkedList {
     return this;
   }
 
-  [Symbol.toPrimitive]() {
-    /**
-     * @arg {LinkedListNode} node
-     * @arg {Array} acc
-     * @return {Array}
-     */
-    const iterate = (node, acc = []) =>
+  [Symbol.toPrimitive](): string {
+    const iterate = (node = this.head, acc: T[] = []): T[] =>
       node ? iterate(node.next, [...acc, node.value]) : acc;
-    return iterate(this.head).join(',');
+    return iterate().join(',');
   }
 
-  *[Symbol.iterator]() {
-    const self = this;
-    function* iterate(node = self.head) {
-      if (!node) return;
+  *[Symbol.iterator](): Generator<T> {
+    function* iterate(node: LinkedListNode<T> | null): Generator<T> {
+      if (node === null) return;
       yield node.value;
       yield* iterate(node.next);
     }
-    yield* iterate();
+    yield* iterate(this.head);
   }
 }
