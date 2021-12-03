@@ -1,8 +1,24 @@
 export default class LinkedListNode<T> {
-  constructor(public value: T, public next: LinkedListNode<T> | null = null) {}
+  private _next: LinkedListNode<T> | null;
 
-  hasNext(): boolean {
-    return this.next !== null;
+  constructor(public readonly value: T, next?: LinkedListNode<T>) {
+    this._next = next ?? null;
+  }
+
+  get next(): LinkedListNode<T> | undefined {
+    return this._next ?? undefined;
+  }
+
+  setNext(node: LinkedListNode<T>): LinkedListNode<T> | undefined {
+    const ref = this.next;
+    this._next = node;
+    return ref;
+  }
+
+  unlink(): LinkedListNode<T> | undefined {
+    const ref = this.next;
+    this._next = null;
+    return ref;
   }
 
   [Symbol.toPrimitive](hint: Hint): string | number {

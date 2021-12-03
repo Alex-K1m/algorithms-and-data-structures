@@ -7,10 +7,28 @@ describe('LinkedListNode', () => {
 
     expect(node.value).toBe(0);
     expect(node.next).toBe(next);
-    expect(node.hasNext()).toBe(true);
     expect(node.next?.value).toBe(1);
-    expect(node.next?.next).toBeNull();
-    expect(node.next?.hasNext()).toBe(false);
+    expect(node.next?.next).toBeUndefined();
+  });
+
+  it('changes the next link', () => {
+    const node = new LinkedListNode(0);
+    const next = new LinkedListNode(1);
+    const newNext = new LinkedListNode(2);
+
+    expect(node.next).toBeUndefined();
+
+    expect(node.unlink()).toBeUndefined();
+    expect(node.next).toBeUndefined();
+
+    expect(node.setNext(next)).toBeUndefined();
+    expect(node.next).toBe(next);
+
+    expect(node.setNext(newNext)).toBe(next);
+    expect(node.next).toBe(newNext);
+
+    expect(node.unlink()).toBe(newNext);
+    expect(node.next).toBeUndefined();
   });
 
   it('converts to a primitive', () => {
