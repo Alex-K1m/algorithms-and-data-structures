@@ -37,10 +37,19 @@ export default class LinkedList<T> implements Iterable<T> {
     return this._last ?? undefined;
   }
 
+  clear(): [LinkedListNode<T> | undefined, LinkedListNode<T> | undefined] {
+    const head = this._head;
+    const last = this._last;
+    this._head = null;
+    this._last = null;
+    return [head ?? undefined, last ?? undefined];
+  }
+
   isEmpty(): boolean {
     return this.head === undefined && this.last === undefined;
   }
 
+  // TODO add ability to pass in multiple values
   prepend(value: T): this {
     const node = new LinkedListNode(value, this.head);
 
@@ -50,6 +59,7 @@ export default class LinkedList<T> implements Iterable<T> {
     return this;
   }
 
+  // TODO add ability to pass in multiple values
   append(value: T): this {
     const node = new LinkedListNode(value);
 
@@ -60,30 +70,25 @@ export default class LinkedList<T> implements Iterable<T> {
     return this;
   }
 
-  find(value: T): LinkedListNode<T> | null;
-  find(callback: (value: T) => boolean): LinkedListNode<T> | null;
-  find(arg: T | ((value: T) => boolean)): LinkedListNode<T> | null {
+  private equals(arg: T | ((value: T) => boolean), value: T): boolean {
+    return arg instanceof Function ? arg(value) : value === arg;
+  }
+
+  find(valueOrCb: T | ((value: T) => boolean)): LinkedListNode<T> | undefined {
     const iterate = (
-      node: LinkedListNode<T> | undefined,
-    ): LinkedListNode<T> | null => {
-      if (!node) return null;
-
-      const equals =
-        arg instanceof Function ? arg(node.value) : node.value === arg;
-      return equals ? node : iterate(node.next);
+      node?: LinkedListNode<T>,
+    ): LinkedListNode<T> | undefined => {
+      if (!node) return undefined;
+      return this.equals(valueOrCb, node.value) ? node : iterate(node.next);
     };
-
     return iterate(this.head);
   }
 
   deleteHead(): this {
     if (this.isEmpty()) return this;
 
-    if (this._head!.next) this._head = this._head!.next;
-    else {
-      this._head = null;
-      this._last = null;
-    }
+    if (this.head!.next) this._head = this.head!.next;
+    else this.clear();
 
     return this;
   }
@@ -91,54 +96,62 @@ export default class LinkedList<T> implements Iterable<T> {
   deleteLast(): this {
     if (this.isEmpty()) return this;
 
-    if (!this._head!.next) {
-      this._head = null;
-      this._last = null;
+    if (!this.head!.next) {
+      this.clear();
       return this;
     }
 
-    const iterate = (node: LinkedListNode<T> | undefined) => {
-      if (node!.next === this._last) {
-        this._last = node ?? null;
-        this._last!.unlink();
+    const iterate = (node: LinkedListNode<T>) => {
+      if (node.next === this.last) {
+        this._last = node;
+        node.unlink();
         return;
       }
-      iterate(node!.next);
+      iterate(node.next!);
     };
-    iterate(this.head);
+    iterate(this.head!);
 
     return this;
   }
 
-  delete(value: T): this;
-  delete(callback: (value: T | undefined) => boolean): this;
-  delete(arg: T | ((value: T | undefined) => boolean)): this {
-    const iterate = (
-      node: LinkedListNode<T> | undefined,
-      prevNode = new LinkedListNode<unknown>(null) as LinkedListNode<T>,
-    ) => {
-      if (node === null) return;
+  delete(valueOrCb: T | ((value: T | undefined) => boolean)): this {
+    if (this.isEmpty()) return this;
 
-      const equals =
-        arg instanceof Function ? arg(node?.value) : node?.value === arg;
+    const equalsTo = (value: T): boolean => this.equals(valueOrCb, value);
 
-      if (equals) {
-        if (node?.next) prevNode.setNext(node!.next);
-        else prevNode.unlink();
-
-        if (node === this._head) this._head = this._head.next ?? null;
-
-        if (this.isEmpty()) this._last = null;
-
-        if (node === this._last) {
-          this._last = prevNode;
-          this._last.unlink();
-        }
+    if (this.head === this.last) {
+      if (equalsTo(this.head!.value)) {
+        this.head?.unlink();
+        this.clear();
       }
-      iterate(node?.next, node);
-    };
-    iterate(this.head);
+      return this;
+    }
 
+    if (equalsTo(this.head!.value)) {
+      this.deleteHead();
+      return this.delete(valueOrCb);
+    }
+
+    if (equalsTo(this.last!.value)) {
+      this.deleteLast();
+      return this.delete(valueOrCb);
+    }
+
+    const iterate = (prevNode: LinkedListNode<T>): void => {
+      const currentNode = prevNode.next;
+      if (currentNode === this.last) return;
+
+      if (equalsTo(currentNode!.value)) {
+        prevNode.setNext(currentNode!.next!);
+        currentNode!.unlink();
+        iterate(prevNode);
+        return;
+      }
+
+      iterate(prevNode.next!);
+    };
+
+    iterate(this.head!);
     return this;
   }
 

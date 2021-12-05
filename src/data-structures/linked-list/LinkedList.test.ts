@@ -84,7 +84,7 @@ describe('LinkedList', () => {
     expect(actual?.value).toBe(2);
     expect(actual?.next?.value).toBe(3);
 
-    expect(list.find(4)).toBeNull();
+    expect(list.find(4)).toBeUndefined();
 
     expect(list.find((value) => value % 2 === 0)?.value).toBe(2);
   });
