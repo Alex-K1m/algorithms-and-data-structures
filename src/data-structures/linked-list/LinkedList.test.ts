@@ -12,10 +12,10 @@ describe('LinkedList', () => {
     expect(list.last?.value).toBe(3);
     expect(String(list)).toBe(String(items));
     expect(list.head?.next?.value).toBe(2);
-    expect(list.last?.next).toBeNull();
+    expect(list.last?.next).toBeUndefined();
 
     expect(singleValueList.head).toBe(singleValueList.last);
-    expect(singleValueList.head?.next).toBeNull();
+    expect(singleValueList.head?.next).toBeUndefined();
   });
 
   it('creates a list from node', () => {
@@ -35,8 +35,8 @@ describe('LinkedList', () => {
     const listFromArray = new LinkedList([]);
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
     expect(String(list)).toBe('');
     expect(listFromArray.isEmpty()).toBe(true);
   });
@@ -50,7 +50,7 @@ describe('LinkedList', () => {
     expect(String(list)).toBe('0,1,2');
 
     expect(singleValueList.head?.value).toBe(0);
-    expect(singleValueList.head?.next).toBeNull();
+    expect(singleValueList.head?.next).toBeUndefined();
     expect(singleValueList.head).toBe(singleValueList.last);
     expect(String(singleValueList)).toBe('0');
   });
@@ -60,11 +60,11 @@ describe('LinkedList', () => {
     const singleValueList = new LinkedList<number>().append(0);
 
     expect(list.last?.value).toBe(3);
-    expect(list.last?.next).toBeNull();
+    expect(list.last?.next).toBeUndefined();
     expect(String(list)).toBe('1,2,3');
 
     expect(singleValueList.head?.value).toBe(0);
-    expect(singleValueList.last?.next).toBeNull();
+    expect(singleValueList.last?.next).toBeUndefined();
     expect(singleValueList.head).toBe(singleValueList.last);
     expect(String(singleValueList)).toBe('0');
   });
@@ -93,27 +93,27 @@ describe('LinkedList', () => {
     const list = new LinkedList([1, 2]).deleteHead();
 
     expect(list.head?.value).toBe(2);
-    expect(list.head?.next).toBeNull();
+    expect(list.head?.next).toBeUndefined();
     expect(list.head).toBe(list.last);
 
     list.deleteHead();
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
 
     list.deleteHead();
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
   });
 
   it('deletes last', () => {
     const list = new LinkedList([1, 2, 3]).deleteLast();
 
     expect(list.last?.value).toBe(2);
-    expect(list.last?.next).toBeNull();
+    expect(list.last?.next).toBeUndefined();
     expect(String(list)).toBe('1,2');
 
     list.deleteLast();
@@ -124,14 +124,14 @@ describe('LinkedList', () => {
     list.deleteLast();
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
 
     list.deleteLast();
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
   });
 
   it('deletes nodes by value', () => {
@@ -151,7 +151,7 @@ describe('LinkedList', () => {
     list.delete((val) => val === 4);
 
     expect(list.last?.value).toBe(3);
-    expect(list.last?.next).toBeNull();
+    expect(list.last?.next).toBeUndefined();
     expect(String(list)).toBe('3');
 
     list.delete(5);
@@ -161,7 +161,7 @@ describe('LinkedList', () => {
     list.delete(3);
 
     expect(list.isEmpty()).toBe(true);
-    expect(list.head).toBeNull();
-    expect(list.last).toBeNull();
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
   });
 });
