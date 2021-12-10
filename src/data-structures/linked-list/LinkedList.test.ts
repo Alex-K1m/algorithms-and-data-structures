@@ -41,6 +41,18 @@ describe('LinkedList', () => {
     expect(listFromArray.isEmpty()).toBe(true);
   });
 
+  it.each([[[1, 2, 3]], [[1]], [[]]])('clears a list %#', (values) => {
+    const list = new LinkedList(values);
+    const { head, last } = list;
+    const [prevHead, prevLast] = list.clear();
+
+    expect(prevHead).toBe(head);
+    expect(prevLast).toBe(last);
+    expect(list.isEmpty()).toBe(true);
+    expect(list.head).toBeUndefined();
+    expect(list.last).toBeUndefined();
+  });
+
   it('prepends a value', () => {
     const list = new LinkedList([1, 2]).prepend();
 
@@ -185,5 +197,8 @@ describe('LinkedList', () => {
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
+
+    list.delete(0);
+    expect(list.isEmpty()).toBe(true);
   });
 });
