@@ -1,11 +1,24 @@
 import LinkedListNode from './LinkedListNode';
 
+function createList<T>(
+  values: T[],
+): [LinkedListNode<T>, LinkedListNode<T>] | [] {
+  if (values.length < 1) return [];
+
+  const lastNode = new LinkedListNode(values[values.length - 1]);
+  const firstNode = values
+    .slice(0, -1)
+    .reduceRight((next, value) => new LinkedListNode(value, next), lastNode);
+
+  return [firstNode, lastNode];
+}
+
 export default class LinkedList<T> implements Iterable<T> {
   private _head: LinkedListNode<T> | null;
 
   private _last: typeof this._head;
 
-  constructor(list?: T[] | LinkedListNode<T>) {
+  constructor(list: T[] | LinkedListNode<T> = []) {
     if (list instanceof LinkedListNode) {
       this._head = list;
       this._last = (function iterate(node): LinkedListNode<T> {
@@ -14,19 +27,9 @@ export default class LinkedList<T> implements Iterable<T> {
       return;
     }
 
-    if (Array.isArray(list) && list.length > 0) {
-      this._last = new LinkedListNode(list[list.length - 1]);
-      this._head = list
-        .slice(0, -1)
-        .reduceRight(
-          (next, value) => new LinkedListNode(value, next),
-          this._last,
-        );
-      return;
-    }
-
-    this._head = null;
-    this._last = null;
+    const [head, last] = createList(list);
+    this._head = head ?? null;
+    this._last = last ?? null;
   }
 
   get head(): LinkedListNode<T> | undefined {
@@ -49,23 +52,26 @@ export default class LinkedList<T> implements Iterable<T> {
     return this.head === undefined && this.last === undefined;
   }
 
-  // TODO add ability to pass in multiple values
-  prepend(value: T): this {
-    const node = new LinkedListNode(value, this.head);
+  prepend(...values: T[]): this {
+    if (values.length < 1) return this;
 
-    if (this.isEmpty()) this._last = node;
-    this._head = node;
+    const [newHead, lastNodeToPrepend] = createList(values);
+
+    if (this.isEmpty()) this._last = lastNodeToPrepend!;
+    lastNodeToPrepend?.setNext(this.head!);
+    this._head = newHead!;
 
     return this;
   }
 
-  // TODO add ability to pass in multiple values
-  append(value: T): this {
-    const node = new LinkedListNode(value);
+  append(...values: T[]): this {
+    if (values.length < 1) return this;
 
-    if (this.isEmpty()) this._head = node;
-    else this._last!.setNext(node);
-    this._last = node;
+    const [firstNodeToAppend, newLast] = createList(values);
+
+    if (this.isEmpty()) this._head = firstNodeToAppend!;
+    else this._last!.setNext(firstNodeToAppend!);
+    this._last = newLast!;
 
     return this;
   }
