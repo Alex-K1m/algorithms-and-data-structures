@@ -1,17 +1,14 @@
-import LinkedList from '../linked-list/LinkedList.js';
-import HashTable from './HashTable.js';
+import HashTable, { Pair } from './HashTable';
 
 describe('HashTable', () => {
-  /** @type {[string, *][]} */
-  const pairs = [
+  const pairs: Pair[] = [
     ['a', 'str'],
     ['b', 42],
     ['k', true],
     ['l', null],
-  ];
+  ]; // hashes are 7, 8, 7, 8
 
-  /** @type {HashTable} */
-  let filledHashTable;
+  let filledHashTable: HashTable;
 
   beforeEach(() => {
     filledHashTable = new HashTable()
@@ -32,53 +29,58 @@ describe('HashTable', () => {
   });
 
   it('converts to string', () => {
-    /** @type {[string, *][]} */
-    const entries = [
+    const entries: Pair[] = [
       ['key', 42],
       ['hash', 'map'],
       ['bool', true],
-    ];
+    ]; // hashes are 9, 0, 8
     const expected = [
       'HashTable {',
-      '  key => 42',
       '  hash => map',
       '  bool => true',
+      '  key => 42',
       '}',
     ].join('\n');
 
     const emptyHashTable = new HashTable();
-    const hashTable = new HashTable();
-    hashTable._buckets = entries.map((entry) => new LinkedList([entry]));
+    const hashTable = new HashTable()
+      .set(...entries[0])
+      .set(...entries[1])
+      .set(...entries[2]);
 
     expect(String(emptyHashTable)).toBe('');
     expect(String(hashTable)).toBe(expected);
   });
 
-  describe('adds new pairs and handles collisions', () => {
-    test.each(pairs)('case %#', (key, value) => {
-      const hashTable = filledHashTable;
-      const index = hashTable._hash(key);
-      const node = hashTable._buckets[index].find(
-        ([savedKey]) => savedKey === key,
-      );
+  it('adds new pairs and handles collisions', () => {
+    const hashTable = filledHashTable;
+    const expected = [
+      'HashTable {',
+      '  k => true',
+      '  a => str',
+      '  l => null',
+      '  b => 42',
+      '}',
+    ].join('\n');
 
-      expect(node).not.toBeNull();
-      expect(node.value).toEqual([key, value]);
-    });
+    expect(String(hashTable)).toBe(expected);
   });
 
   it('overwrites a value for existing key', () => {
     const hashTable = filledHashTable;
-    const index = hashTable._hash('k');
-    const { head } = hashTable._buckets[index];
-
-    expect(head.value).toEqual(['k', true]);
+    const expected = [
+      'HashTable {',
+      '  k => 13',
+      '  a => str',
+      '  l => null',
+      '  b => 42',
+      '}',
+    ].join('\n');
 
     hashTable.set('k', 13);
-    const headAfterSet = hashTable._buckets[index].head;
 
-    expect(headAfterSet).toBe(head);
-    expect(head.value).toEqual(['k', 13]);
+    expect(hashTable.get('k')).toBe(13);
+    expect(String(hashTable)).toBe(expected);
   });
 
   it('returns a value for a given key', () => {
