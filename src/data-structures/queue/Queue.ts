@@ -11,8 +11,8 @@ export default class Queue<T> implements Iterable<T> {
     return this.list.isEmpty();
   }
 
-  enqueue(value: T): this {
-    this.list.append(value);
+  enqueue(...values: T[]): this {
+    this.list.append(...values);
     return this;
   }
 

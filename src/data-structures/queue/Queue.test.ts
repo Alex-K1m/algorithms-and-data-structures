@@ -9,14 +9,14 @@ describe('Queue', () => {
   });
 
   it('adds a value to the rear', () => {
-    const queue = new Queue().enqueue(1).enqueue(2).enqueue(3);
+    const queue = new Queue().enqueue(1, 2, 3);
 
     expect(queue.isEmpty()).toBe(false);
     expect(String(queue)).toBe('1,2,3');
   });
 
   it('removes a value from the front', () => {
-    const queue = new Queue().enqueue(1).enqueue(2);
+    const queue = new Queue().enqueue(1, 2);
 
     expect(queue.dequeue()).toBe(1);
     expect(String(queue)).toBe('2');
@@ -28,7 +28,7 @@ describe('Queue', () => {
   });
 
   it('returns a value from the front', () => {
-    const queue = new Queue().enqueue(1).enqueue(2);
+    const queue = new Queue().enqueue(1, 2);
 
     expect(queue.peek()).toBe(1);
     expect(queue.peek()).toBe(1);
@@ -43,7 +43,7 @@ describe('Queue', () => {
   });
 
   it('is iterable', () => {
-    const queue = new Queue().enqueue(1).enqueue(2).enqueue(3);
+    const queue = new Queue().enqueue(1, 2, 3);
 
     expect([...queue]).toEqual([1, 2, 3]);
   });
