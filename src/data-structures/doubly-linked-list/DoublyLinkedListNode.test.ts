@@ -1,9 +1,9 @@
-import DoublyLinkedListNode from './DoublyLinkedListNode.js';
+import DoublyLinkedListNode from './DoublyLinkedListNode';
 
 describe('DoublyLinkedListNode', () => {
   it('creates a node', () => {
-    const next = new DoublyLinkedListNode();
-    const prev = new DoublyLinkedListNode();
+    const next = new DoublyLinkedListNode(1);
+    const prev = new DoublyLinkedListNode(0);
     const node = new DoublyLinkedListNode(42, next, prev);
 
     expect(node.value).toBe(42);
@@ -12,11 +12,11 @@ describe('DoublyLinkedListNode', () => {
   });
 
   it('sets default parameters', () => {
-    const node = new DoublyLinkedListNode();
+    const node = new DoublyLinkedListNode(1);
 
-    expect(node.value).toBeNull();
-    expect(node.next).toBeNull();
-    expect(node.prev).toBeNull();
+    expect(node.value).toBeDefined();
+    expect(node.next).toBeUndefined();
+    expect(node.prev).toBeUndefined();
   });
 
   it('converts to a primitive', () => {
