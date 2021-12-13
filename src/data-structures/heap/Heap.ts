@@ -59,10 +59,11 @@ export default abstract class Heap<T> {
     return this.container[0];
   }
 
-  add(value: T): this {
-    this.container.push(value);
+  add(...values: T[]): this {
+    if (values.length < 1) return this;
+    this.container.push(values[0]);
     this.heapifyUp();
-    return this;
+    return this.add(...values.slice(1));
   }
 
   poll(): T | undefined {
