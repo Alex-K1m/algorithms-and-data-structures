@@ -19,6 +19,22 @@ describe('DoublyLinkedListNode', () => {
     expect(node.prev).toBeUndefined();
   });
 
+  it('modifies the prev & next links', () => {
+    const node = new DoublyLinkedListNode(1);
+    const prev = new DoublyLinkedListNode(0);
+    const next = new DoublyLinkedListNode(2);
+
+    expect(node.setPrev(prev)).toBeUndefined();
+    expect(node.prev).toBe(prev);
+
+    expect(node.setNext(next)).toBeUndefined();
+    expect(node.next).toBe(next);
+
+    expect(node.unlink()).toEqual([prev, next]);
+    expect(node.prev).toBeUndefined();
+    expect(node.next).toBeUndefined();
+  });
+
   it('converts to a primitive', () => {
     const intNode = new DoublyLinkedListNode(42);
 
