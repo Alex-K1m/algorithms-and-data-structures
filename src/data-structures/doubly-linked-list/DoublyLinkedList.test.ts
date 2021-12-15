@@ -45,14 +45,26 @@ describe('DoublyLinkedList', () => {
   });
 
   it('prepends a value', () => {
-    const list = new DoublyLinkedList([1, 2]).prepend(0);
-    const singleValueList = new DoublyLinkedList().prepend(0);
+    const list = new DoublyLinkedList([1, 2]).prepend();
+
+    expect(String(list)).toBe('1,2');
+
+    list.prepend(0);
 
     expect(list.head?.value).toBe(0);
-    expect(list.head?.next?.value).toBe(1);
     expect(list.head?.prev).toBeUndefined();
-    expect(list.head?.next?.prev).toBe(list.head);
+    expect(list.head?.next?.value).toBe(1);
+    expect(list.head?.next?.prev?.value).toBe(0);
     expect(String(list)).toBe('0,1,2');
+
+    list.prepend(-2, -1);
+
+    expect(list.head?.value).toBe(-2);
+    expect(list.head?.next?.value).toBe(-1);
+    expect(list.head?.next?.next?.prev?.value).toBe(-1);
+    expect(String(list)).toBe('-2,-1,0,1,2');
+
+    const singleValueList = new DoublyLinkedList<number>().prepend(0);
 
     expect(singleValueList.head?.value).toBe(0);
     expect(singleValueList.head?.next).toBeUndefined();
@@ -62,17 +74,30 @@ describe('DoublyLinkedList', () => {
   });
 
   it('appends a value', () => {
-    const list = new DoublyLinkedList([1, 2]).append(3);
-    const singleValueList = new DoublyLinkedList().append(0);
+    const list = new DoublyLinkedList([1, 2]).append();
+
+    expect(String(list)).toBe('1,2');
+
+    list.append(3);
 
     expect(list.last?.value).toBe(3);
     expect(list.last?.next).toBeUndefined();
     expect(list.last?.prev?.value).toBe(2);
+    expect(list.last?.prev?.next?.value).toBe(3);
     expect(String(list)).toBe('1,2,3');
 
+    list.append(4, 5);
+
+    expect(list.last?.value).toBe(5);
+    expect(list.last?.next).toBeUndefined();
+    expect(list.last?.prev?.prev?.next?.value).toBe(4);
+    expect(String(list)).toBe('1,2,3,4,5');
+
+    const singleValueList = new DoublyLinkedList<number>().append(0);
+
     expect(singleValueList.head?.value).toBe(0);
-    expect(singleValueList.head?.prev).toBeUndefined();
-    expect(singleValueList.head?.next).toBeUndefined();
+    expect(singleValueList.last?.next).toBeUndefined();
+    expect(singleValueList.last?.prev).toBeUndefined();
     expect(singleValueList.head).toBe(singleValueList.last);
     expect(String(singleValueList)).toBe('0');
   });

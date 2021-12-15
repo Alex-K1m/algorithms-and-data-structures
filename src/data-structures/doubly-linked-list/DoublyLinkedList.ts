@@ -57,19 +57,31 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     return this.head === undefined && this.last === undefined;
   }
 
-  prepend(value: T): this {
-    const node = new DoublyLinkedListNode(value, this.head);
-    if (this.isEmpty()) this._last = node;
-    else this.head?.setPrev(node);
-    this._head = node;
+  prepend(...values: T[]): this {
+    if (values.length < 1) return this;
+
+    const [newHead, lastNodeToPrepend] = createList(values);
+
+    if (this.isEmpty()) this._last = lastNodeToPrepend!;
+    lastNodeToPrepend?.setNext(this.head!);
+    this.head?.setPrev(lastNodeToPrepend!);
+    this._head = newHead!;
+
     return this;
   }
 
-  append(value: T): this {
-    const node = new DoublyLinkedListNode(value, undefined, this.last);
-    if (this.isEmpty()) this._head = node;
-    else this.last?.setNext(node);
-    this._last = node;
+  append(...values: T[]): this {
+    if (values.length < 1) return this;
+
+    const [firstNodeToAppend, newLast] = createList(values);
+
+    if (this.isEmpty()) this._head = firstNodeToAppend!;
+    else {
+      this._last!.setNext(firstNodeToAppend!);
+      firstNodeToAppend?.setPrev(this.last!);
+    }
+    this._last = newLast!;
+
     return this;
   }
 
