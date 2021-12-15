@@ -1,5 +1,4 @@
 import DoublyLinkedList from './DoublyLinkedList';
-import DoublyLinkedListNode from './DoublyLinkedListNode';
 
 describe('DoublyLinkedList', () => {
   it('creates a list from array', () => {
@@ -24,7 +23,7 @@ describe('DoublyLinkedList', () => {
   it('creates a list from node', () => {
     const node = new DoublyLinkedList([1, 2, 3]).head;
     const list = new DoublyLinkedList(node);
-    const singleNode = new DoublyLinkedListNode(1);
+    const singleNode = DoublyLinkedList.createNode(1);
     const singleValueList = new DoublyLinkedList(singleNode);
 
     expect(list.isEmpty()).toBe(false);

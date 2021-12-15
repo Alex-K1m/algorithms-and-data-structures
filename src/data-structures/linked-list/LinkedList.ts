@@ -14,6 +14,10 @@ function createList<T>(
 }
 
 export default class LinkedList<T> implements Iterable<T> {
+  static createNode<T>(value: T, next?: LinkedListNode<T>): LinkedListNode<T> {
+    return new LinkedListNode(value, next);
+  }
+
   private _head: LinkedListNode<T> | null;
 
   private _last: typeof this._head;

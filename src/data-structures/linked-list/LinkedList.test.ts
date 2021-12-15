@@ -1,5 +1,4 @@
 import LinkedList from './LinkedList';
-import LinkedListNode from './LinkedListNode';
 
 describe('LinkedList', () => {
   it('creates a list from array', () => {
@@ -20,8 +19,8 @@ describe('LinkedList', () => {
 
   it('creates a list from node', () => {
     const node = new LinkedList([1, 2, 3]).head;
-    const list = new LinkedList(node as LinkedListNode<number>);
-    const singleNode = new LinkedListNode('single');
+    const list = new LinkedList(node);
+    const singleNode = LinkedList.createNode('single');
     const singleValueList = new LinkedList(singleNode);
 
     expect(list.isEmpty()).toBe(false);
@@ -114,7 +113,6 @@ describe('LinkedList', () => {
     const list = new LinkedList([1, 2, 3]);
     const actual = list.find(2);
 
-    expect(actual).toBeInstanceOf(LinkedListNode);
     expect(actual?.value).toBe(2);
     expect(actual?.next?.value).toBe(3);
 

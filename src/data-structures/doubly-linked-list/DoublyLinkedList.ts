@@ -16,6 +16,14 @@ function createList<T>(
 }
 
 export default class DoublyLinkedList<T> implements Iterable<T> {
+  static createNode<T>(
+    value: T,
+    next?: DoublyLinkedListNode<T>,
+    prev?: DoublyLinkedListNode<T>,
+  ): DoublyLinkedListNode<T> {
+    return new DoublyLinkedListNode(value, next, prev);
+  }
+
   private _head: DoublyLinkedListNode<T> | null;
 
   private _last: typeof this._head;
