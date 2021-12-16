@@ -122,45 +122,46 @@ describe('LinkedList', () => {
   });
 
   it('deletes head', () => {
-    const list = new LinkedList([1, 2]).deleteHead();
+    const list = new LinkedList([1, 2]);
+    const deletedNode = list.deleteHead();
 
     expect(list.head?.value).toBe(2);
     expect(list.head?.next).toBeUndefined();
     expect(list.head).toBe(list.last);
+    expect(deletedNode?.value).toBe(1);
+    expect(deletedNode?.next).toBeUndefined();
 
-    list.deleteHead();
-
+    expect(list.deleteHead()?.value).toBe(2);
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
 
-    list.deleteHead();
-
+    expect(list.deleteHead()).toBeUndefined();
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
   });
 
   it('deletes last', () => {
-    const list = new LinkedList([1, 2, 3]).deleteLast();
+    const list = new LinkedList([1, 2, 3]);
+    const deletedNode = list.deleteLast();
 
     expect(list.last?.value).toBe(2);
     expect(list.last?.next).toBeUndefined();
     expect(String(list)).toBe('1,2');
+    expect(deletedNode?.value).toBe(3);
+    expect(deletedNode?.next).toBeUndefined();
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBe(2);
     expect(list.last?.value).toBe(1);
     expect(list.head).toBe(list.last);
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBe(1);
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBeUndefined();
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();

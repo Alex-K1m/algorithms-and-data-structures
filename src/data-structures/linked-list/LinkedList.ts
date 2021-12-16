@@ -94,34 +94,29 @@ export default class LinkedList<T> implements Iterable<T> {
     return iterate(this.head);
   }
 
-  deleteHead(): this {
-    if (this.isEmpty()) return this;
-
-    if (this.head!.next) this._head = this.head!.next;
-    else this.clear();
-
-    return this;
-  }
-
-  deleteLast(): this {
-    if (this.isEmpty()) return this;
-
-    if (!this.head!.next) {
-      this.clear();
-      return this;
+  deleteHead(): LinkedListNode<T> | undefined {
+    if (!this.head?.next) {
+      return this.clear()[0];
     }
 
-    const iterate = (node: LinkedListNode<T>) => {
+    const { head } = this;
+    this._head = head.unlink()!;
+    return head;
+  }
+
+  deleteLast(): LinkedListNode<T> | undefined {
+    if (!this.head?.next) {
+      return this.clear()[1];
+    }
+
+    const iterate = (node: LinkedListNode<T>): LinkedListNode<T> => {
       if (node.next === this.last) {
         this._last = node;
-        node.unlink();
-        return;
+        return node.unlink()!;
       }
-      iterate(node.next!);
+      return iterate(node.next!);
     };
-    iterate(this.head!);
-
-    return this;
+    return iterate(this.head);
   }
 
   delete(valueOrCb: T | ((value: T | undefined) => boolean)): this {

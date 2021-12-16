@@ -109,30 +109,26 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     return iterate(this.head);
   }
 
-  deleteHead(): this {
-    if (this.isEmpty()) return this;
-
-    if (this.head?.next) {
-      this._head = this.head.next;
-      this.head.setPrev(null);
-    } else {
-      this.clear();
+  deleteHead(): DoublyLinkedListNode<T> | undefined {
+    if (!this.head?.next) {
+      return this.clear()[0];
     }
 
-    return this;
+    const { head } = this;
+    this._head = head.unlink()[1]!;
+    this.head.setPrev(null);
+    return head;
   }
 
-  deleteLast(): this {
-    if (this.isEmpty()) return this;
-
-    if (this.head?.next) {
-      this._last = this.last!.prev!;
-      this._last?.setNext(null);
-    } else {
-      this.clear();
+  deleteLast(): DoublyLinkedListNode<T> | undefined {
+    if (!this.last?.prev) {
+      return this.clear()[1];
     }
 
-    return this;
+    const { last } = this;
+    this._last = last.unlink()[0]!;
+    this.last.setNext(null);
+    return last;
   }
 
   delete(value: T): DoublyLinkedList<T> {

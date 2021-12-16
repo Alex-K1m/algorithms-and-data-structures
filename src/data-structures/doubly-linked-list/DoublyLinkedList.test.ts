@@ -122,49 +122,52 @@ describe('DoublyLinkedList', () => {
   });
 
   it('deletes head', () => {
-    const list = new DoublyLinkedList([1, 2]).deleteHead();
+    const list = new DoublyLinkedList([1, 2]);
+    const deletedNode = list.deleteHead();
 
     expect(list.head?.value).toBe(2);
     expect(list.head?.next).toBeUndefined();
     expect(list.head?.prev).toBeUndefined();
     expect(list.head).toBe(list.last);
+    expect(deletedNode?.value).toBe(1);
+    expect(deletedNode?.next).toBeUndefined();
+    expect(deletedNode?.prev).toBeUndefined();
 
-    list.deleteHead();
-
+    expect(list.deleteHead()?.value).toBe(2);
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
 
-    list.deleteHead();
-
+    expect(list.deleteHead()).toBeUndefined();
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
   });
 
   it('deletes last', () => {
-    const list = new DoublyLinkedList([1, 2, 3]).deleteLast();
+    const list = new DoublyLinkedList([1, 2, 3]);
+    const deletedNode = list.deleteLast();
 
     expect(list.last?.value).toBe(2);
     expect(list.last?.next).toBeUndefined();
     expect(list.last?.prev?.value).toBe(1);
     expect(String(list)).toBe('1,2');
+    expect(deletedNode?.value).toBe(3);
+    expect(deletedNode?.next).toBeUndefined();
+    expect(deletedNode?.prev).toBeUndefined();
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBe(2);
     expect(list.last?.value).toBe(1);
     expect(list.head).toBe(list.last);
     expect(list.last?.prev).toBeUndefined();
     expect(list.last?.next).toBeUndefined();
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBe(1);
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
 
-    list.deleteLast();
-
+    expect(list.deleteLast()?.value).toBeUndefined();
     expect(list.isEmpty()).toBe(true);
     expect(list.head).toBeUndefined();
     expect(list.last).toBeUndefined();
