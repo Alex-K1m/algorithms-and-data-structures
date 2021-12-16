@@ -93,10 +93,20 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     return this;
   }
 
-  find(value: T): DoublyLinkedListNode<T> | undefined {
-    const iterate = (node = this.head): DoublyLinkedListNode<T> | undefined =>
-      node && node.value === value ? node : iterate(node?.next);
-    return iterate();
+  private equals(arg: T | ((value: T) => boolean), value: T): boolean {
+    return arg instanceof Function ? arg(value) : value === arg;
+  }
+
+  find(
+    valueOrCb: T | ((value: T) => boolean),
+  ): DoublyLinkedListNode<T> | undefined {
+    const iterate = (
+      node?: DoublyLinkedListNode<T>,
+    ): DoublyLinkedListNode<T> | undefined => {
+      if (!node) return undefined;
+      return this.equals(valueOrCb, node.value) ? node : iterate(node?.next);
+    };
+    return iterate(this.head);
   }
 
   deleteHead(): this {

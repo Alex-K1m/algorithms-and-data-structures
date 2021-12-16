@@ -109,11 +109,16 @@ describe('DoublyLinkedList', () => {
   });
 
   it('finds a node by value', () => {
-    const actual = new DoublyLinkedList([1, 2, 3]).find(2);
+    const list = new DoublyLinkedList([1, 2, 3]);
+    const actual = list.find(2);
 
     expect(actual?.value).toBe(2);
     expect(actual?.next?.value).toBe(3);
     expect(actual?.prev?.value).toBe(1);
+
+    expect(list.find(4)).toBeUndefined();
+
+    expect(list.find((value) => value % 2 === 0)?.value).toBe(2);
   });
 
   it('deletes head', () => {
