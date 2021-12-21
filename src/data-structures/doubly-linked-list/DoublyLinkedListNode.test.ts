@@ -30,7 +30,8 @@ describe('DoublyLinkedListNode', () => {
     expect(node.setNext(next)).toBeUndefined();
     expect(node.next).toBe(next);
 
-    expect(node.unlink()).toEqual([prev, next]);
+    expect(node.setPrev(null)).toBe(prev);
+    expect(node.setNext(null)).toBe(next);
     expect(node.prev).toBeUndefined();
     expect(node.next).toBeUndefined();
   });

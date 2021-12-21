@@ -36,17 +36,6 @@ export default class DoublyLinkedListNode<T> {
     return ref;
   }
 
-  unlink():
-    | [
-        DoublyLinkedListNode<T> | undefined,
-        DoublyLinkedListNode<T> | undefined,
-      ] {
-    const { prev, next } = this;
-    this._prev = null;
-    this._next = null;
-    return [prev, next];
-  }
-
   [Symbol.toPrimitive](hint: Hint): string | number {
     return (hint === 'string' ? String : Number)(this.value);
   }
