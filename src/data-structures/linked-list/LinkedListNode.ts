@@ -15,7 +15,7 @@ export default class LinkedListNode<T> {
     return ref;
   }
 
-  [Symbol.toPrimitive](hint: Hint): string | number {
+  [Symbol.toPrimitive](hint: 'string' | 'number' | 'default'): string | number {
     return (hint === 'string' ? String : Number)(this.value);
   }
 }
