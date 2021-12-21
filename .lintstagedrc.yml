@@ -1,4 +1,10 @@
-'!(*test).{j,t}s':
+'*.{j,t}s':
   - eslint --fix
-  # - jest --findRelatedTests
+
+'*.ts':
+  - tsc-files --noEmit
+
+'!(*test).{j,t}s':
+  - jest --findRelatedTests
+
 '*.{json,yml,yaml,md}': prettier --write
