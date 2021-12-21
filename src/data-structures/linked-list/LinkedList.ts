@@ -52,18 +52,21 @@ export default class LinkedList<T> implements Iterable<T> {
     return [head ?? undefined, last ?? undefined];
   }
 
-  isEmpty(): boolean {
-    return this.head === undefined && this.last === undefined;
+  isEmpty(): this is { head: undefined; last: undefined } {
+    return this.head === undefined || this.last === undefined;
   }
 
   prepend(...values: T[]): this {
     if (values.length < 1) return this;
 
-    const [newHead, lastNodeToPrepend] = createList(values);
+    const [newHead, lastNodeToPrepend] = createList(values) as [
+      LinkedListNode<T>,
+      LinkedListNode<T>,
+    ];
 
-    if (this.isEmpty()) this._last = lastNodeToPrepend!;
-    lastNodeToPrepend?.setNext(this.head!);
-    this._head = newHead!;
+    if (this.isEmpty()) this._last = lastNodeToPrepend;
+    lastNodeToPrepend.setNext(this.head ?? null);
+    this._head = newHead;
 
     return this;
   }
@@ -71,11 +74,14 @@ export default class LinkedList<T> implements Iterable<T> {
   append(...values: T[]): this {
     if (values.length < 1) return this;
 
-    const [firstNodeToAppend, newLast] = createList(values);
+    const [firstNodeToAppend, newLast] = createList(values) as [
+      LinkedListNode<T>,
+      LinkedListNode<T>,
+    ];
 
-    if (this.isEmpty()) this._head = firstNodeToAppend!;
-    else this._last!.setNext(firstNodeToAppend!);
-    this._last = newLast!;
+    if (!this.last) this._head = firstNodeToAppend;
+    else this.last.setNext(firstNodeToAppend);
+    this._last = newLast;
 
     return this;
   }
@@ -95,24 +101,22 @@ export default class LinkedList<T> implements Iterable<T> {
   }
 
   deleteHead(): LinkedListNode<T> | undefined {
-    if (!this.head?.next) {
-      return this.clear()[0];
-    }
+    if (!this.head?.next) return this.clear()[0];
 
     const { head } = this;
-    this._head = head.unlink()!;
+    this._head = head.setNext(null) ?? null;
     return head;
   }
 
   deleteLast(): LinkedListNode<T> | undefined {
-    if (!this.head?.next) {
-      return this.clear()[1];
-    }
+    if (!this.head?.next) return this.clear()[1];
 
-    const iterate = (node: LinkedListNode<T>): LinkedListNode<T> => {
+    const iterate = (
+      node: LinkedListNode<T>,
+    ): LinkedListNode<T> | undefined => {
       if (node.next === this.last) {
         this._last = node;
-        return node.unlink()!;
+        return node.setNext(null);
       }
       return iterate(node.next!);
     };
@@ -120,43 +124,43 @@ export default class LinkedList<T> implements Iterable<T> {
   }
 
   delete(valueOrCb: T | ((value: T | undefined) => boolean)): this {
-    if (this.isEmpty()) return this;
+    if (this.head === undefined || this.last === undefined) return this;
 
     const equalsTo = (value: T): boolean => this.equals(valueOrCb, value);
 
     if (this.head === this.last) {
-      if (equalsTo(this.head!.value)) {
-        this.head?.unlink();
+      if (equalsTo(this.head.value)) {
+        this.head.setNext(null);
         this.clear();
       }
       return this;
     }
 
-    if (equalsTo(this.head!.value)) {
+    if (equalsTo(this.head.value)) {
       this.deleteHead();
       return this.delete(valueOrCb);
     }
 
-    if (equalsTo(this.last!.value)) {
+    if (equalsTo(this.last.value)) {
       this.deleteLast();
       return this.delete(valueOrCb);
     }
 
     const iterate = (prevNode: LinkedListNode<T>): void => {
-      const currentNode = prevNode.next;
+      const currentNode = prevNode.next as LinkedListNode<T>;
       if (currentNode === this.last) return;
 
-      if (equalsTo(currentNode!.value)) {
-        prevNode.setNext(currentNode!.next!);
-        currentNode!.unlink();
+      if (equalsTo(currentNode.value)) {
+        prevNode.setNext(currentNode.next ?? null);
+        currentNode.setNext(null);
         iterate(prevNode);
         return;
       }
 
-      iterate(prevNode.next!);
+      iterate(currentNode);
     };
 
-    iterate(this.head!);
+    iterate(this.head);
     return this;
   }
 

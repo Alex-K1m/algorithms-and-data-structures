@@ -9,15 +9,9 @@ export default class LinkedListNode<T> {
     return this._next ?? undefined;
   }
 
-  setNext(node: LinkedListNode<T>): LinkedListNode<T> | undefined {
+  setNext(node: LinkedListNode<T> | null): LinkedListNode<T> | undefined {
     const ref = this.next;
     this._next = node;
-    return ref;
-  }
-
-  unlink(): LinkedListNode<T> | undefined {
-    const ref = this.next;
-    this._next = null;
     return ref;
   }
 

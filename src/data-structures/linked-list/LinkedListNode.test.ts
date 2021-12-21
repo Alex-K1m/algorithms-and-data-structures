@@ -18,7 +18,7 @@ describe('LinkedListNode', () => {
 
     expect(node.next).toBeUndefined();
 
-    expect(node.unlink()).toBeUndefined();
+    expect(node.setNext(null)).toBeUndefined();
     expect(node.next).toBeUndefined();
 
     expect(node.setNext(next)).toBeUndefined();
@@ -27,7 +27,7 @@ describe('LinkedListNode', () => {
     expect(node.setNext(newNext)).toBe(next);
     expect(node.next).toBe(newNext);
 
-    expect(node.unlink()).toBe(newNext);
+    expect(node.setNext(null)).toBe(newNext);
     expect(node.next).toBeUndefined();
   });
 
