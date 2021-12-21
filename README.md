@@ -1,5 +1,5 @@
-[![CI](https://github.com/Alex-K1m/algorithms-and-data-structures/actions/workflows/ci.yml/badge.svg)](https://github.com/Alex-K1m/algorithms-and-data-structures/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Alex-K1m/algorithms-and-data-structures/branch/main/graph/badge.svg?token=8AB442KM0N)](https://codecov.io/gh/Alex-K1m/algorithms-and-data-structures)
+[![CI](https://github.com/alex-kim-dev/algorithms-and-data-structures/actions/workflows/ci.yml/badge.svg)](https://github.com/alex-kim-dev/algorithms-and-data-structures/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/alex-kim-dev/algorithms-and-data-structures/branch/main/graph/badge.svg?token=8AB442KM0N)](https://codecov.io/gh/alex-kim-dev/algorithms-and-data-structures)
 
 # Algorithms & data structures
 
