@@ -3,7 +3,7 @@
 
 # Algorithms & data structures
 
-This repo contains implementations of algorithms and data structures written in javascript for educational purposes. I took a test driven development (TDD) approach and added type checking js code with typescript & jsdoc comments.
+This repo contains implementations of algorithms and data structures written in typescript and using TDD approach for educational purposes.
 
 ## So far I've learned
 
