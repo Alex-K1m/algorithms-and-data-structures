@@ -49,4 +49,19 @@ export default class Sorter<T> {
 
     return clone;
   }
+
+  insertion(array: T[]): T[] {
+    const clone = array.slice();
+
+    for (let index = 1; index < clone.length; index += 1) {
+      let i = index;
+
+      while (i > 0 && this.compare.greater(clone[i - 1], clone[i])) {
+        [clone[i - 1], clone[i]] = [clone[i], clone[i - 1]];
+        i -= 1;
+      }
+    }
+
+    return clone;
+  }
 }

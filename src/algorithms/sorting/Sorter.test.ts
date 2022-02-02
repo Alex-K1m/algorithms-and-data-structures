@@ -17,7 +17,7 @@ const reversed = sorted.slice().reverse();
 const shuffledStrings = ['dd', 'aa', 'q', 'a', 'bbbb', 'ccc'];
 const sortedStrings = ['q', 'a', 'dd', 'aa', 'ccc', 'bbbb'];
 
-const methods = ['bubble', 'selection'] as const;
+const methods = ['bubble', 'selection', 'insertion'] as const;
 
 describe('Sorting algorithms work correctly and are stable', () => {
   test.each(methods.map((item) => [item]))('%s sort', (method) => {
