@@ -33,3 +33,17 @@ test('bubble sort works correctly & is stable', () => {
   expect(sorter.reverse().bubble(shuffled)).toEqual(reversed);
   expect(strLengthsSorter.bubble(shuffledStrings)).toEqual(sortedStrings);
 });
+
+test('selection sort works correctly & is stable', () => {
+  const sorter = new Sorter(compareNumbers);
+  const strLengthsSorter = new Sorter(compareStringLengths);
+
+  expect(sorter.selection([])).toEqual([]);
+  expect(sorter.selection([1])).toEqual([1]);
+  expect(sorter.selection([1, 1, 1])).toEqual([1, 1, 1]);
+  expect(sorter.selection(sorted)).toEqual(sorted);
+  expect(sorter.selection(reversed)).toEqual(sorted);
+  expect(sorter.selection(shuffled)).toEqual(sorted);
+  expect(sorter.reverse().selection(shuffled)).toEqual(reversed);
+  expect(strLengthsSorter.selection(shuffledStrings)).toEqual(sortedStrings);
+});

@@ -31,4 +31,22 @@ export default class Sorter<T> {
 
     return clone;
   }
+
+  selection(array: T[]): T[] {
+    const clone = array.slice();
+
+    for (let i = 0; i < clone.length - 1; i += 1) {
+      let indexOfMin = i;
+
+      for (let j = i + 1; j < clone.length; j += 1) {
+        if (this.compare.greater(clone[indexOfMin], clone[j])) {
+          indexOfMin = j;
+        }
+      }
+
+      [clone[i], clone[indexOfMin]] = [clone[indexOfMin], clone[i]];
+    }
+
+    return clone;
+  }
 }
