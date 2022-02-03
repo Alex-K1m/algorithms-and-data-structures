@@ -14,9 +14,17 @@ export default class Heap<T> {
     return Math.floor((index - 1) / 2);
   }
 
-  private getChildIndex(index: number): number {
-    const childIndex = index * 2 + 1;
-    return childIndex < this.size ? childIndex : -1;
+  private getChildrenIndexes(
+    index: number,
+  ): [number | undefined, number | undefined] {
+    const leftChildIndex = index * 2 + 1;
+    const rightChildIndex = leftChildIndex + 1;
+
+    if (leftChildIndex >= this.size) return [undefined, undefined];
+
+    if (rightChildIndex >= this.size) return [leftChildIndex, undefined];
+
+    return [leftChildIndex, rightChildIndex];
   }
 
   private swap(index1: number, index2: number): void {
@@ -44,13 +52,23 @@ export default class Heap<T> {
 
   private heapifyDown(startIndex = 0): void {
     const iterate = (index: number): void => {
-      const childIndex = this.getChildIndex(index);
-      if (childIndex === -1) return;
-
+      const [leftChildIndex, rightChildIndex] = this.getChildrenIndexes(index);
       const value = this.container[index];
-      const childValue = this.container[childIndex];
 
-      if (this.compare.greater(childValue, value)) {
+      if (!leftChildIndex) return;
+
+      const [childIndex, child] = (() => {
+        const leftChild = this.container[leftChildIndex];
+        if (!rightChildIndex) return [leftChildIndex, leftChild];
+
+        const rightChild = this.container[rightChildIndex];
+
+        return this.compare.greater(leftChild, rightChild)
+          ? [leftChildIndex, leftChild]
+          : [rightChildIndex, rightChild];
+      })();
+
+      if (this.compare.greater(child, value)) {
         this.swap(index, childIndex);
       }
 

@@ -78,10 +78,10 @@ describe('Heap (max)', () => {
 
     expect(String(heap)).toBe('10,5,9,3,2,1,4');
     expect(heap.poll()).toBe(10);
-    expect(String(heap)).toBe('5,4,9,3,2,1');
+    expect(String(heap)).toBe('9,5,4,3,2,1');
 
-    expect(heap.poll()).toBe(5);
-    expect(String(heap)).toBe('4,3,9,1,2');
+    expect(heap.poll()).toBe(9);
+    expect(String(heap)).toBe('5,3,4,1,2');
   });
 
   it('deletes a value', () => {
@@ -107,7 +107,7 @@ describe('Heap (max)', () => {
     expect(heap.peek()).toEqual([20]);
     expect(String(heap.add([25]))).toBe('25,15,20,5,12,5,10');
     expect(heap.poll()).toEqual([25]);
-    expect(String(heap.delete([5]))).toBe('15,12,20,10');
+    expect(String(heap.delete([5]))).toBe('20,15,10,12');
   });
 });
 

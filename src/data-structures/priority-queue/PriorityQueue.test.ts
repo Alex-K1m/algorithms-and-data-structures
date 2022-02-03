@@ -29,10 +29,10 @@ describe('PriorityQueue', () => {
       .enqueue(0);
 
     expect(queue.dequeue()).toBe(0);
-    expect(queue.dequeue()).toBe(20);
-    expect(queue.dequeue()).toBe(31);
-    expect(queue.dequeue()).toBe(30);
     expect(queue.dequeue()).toBe(10);
+    expect(queue.dequeue()).toBe(20);
+    expect(queue.dequeue()).toBe(30);
+    expect(queue.dequeue()).toBe(31);
     expect(queue.dequeue()).toBe(40);
     expect(queue.dequeue()).toBeUndefined();
     expect(queue.isEmpty()).toBe(true);
