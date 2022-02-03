@@ -1,3 +1,4 @@
+import Heap from '../../data-structures/heap/Heap';
 import Comparator from '../../utils/Comparator';
 import { CompareFn } from '../../utils/compareFns';
 
@@ -64,5 +65,12 @@ export default class Sorter<T> {
     }
 
     return clone;
+  }
+
+  heap(array: T[]): T[] {
+    const maxHeap = new Heap(this.compare.fn).add(...array);
+    return Array.from({ length: maxHeap.size })
+      .map(() => maxHeap.poll()!)
+      .reverse();
   }
 }
