@@ -1,9 +1,9 @@
 import Comparator from '../../utils/Comparator';
-import MaxHeap from './MaxHeap';
+import Heap from './Heap';
 
-describe('Heap', () => {
+describe('Heap (max)', () => {
   it('creates an empty heap', () => {
-    const heap = new MaxHeap();
+    const heap = new Heap();
 
     expect(heap.size).toBe(0);
     expect(heap.peek()).toBeUndefined();
@@ -11,7 +11,7 @@ describe('Heap', () => {
   });
 
   it('adds a new value', () => {
-    const heap = new MaxHeap().add(10);
+    const heap = new Heap().add(10);
 
     expect(heap.size).toBe(1);
     expect(heap.peek()).toBe(10);
@@ -51,7 +51,7 @@ describe('Heap', () => {
   });
 
   it('extracts the root value', () => {
-    const heap = new MaxHeap();
+    const heap = new Heap();
 
     expect(heap.poll()).toBeUndefined();
 
@@ -76,7 +76,7 @@ describe('Heap', () => {
   });
 
   it('deletes a value', () => {
-    const heap = new MaxHeap().add(3, 10, 5, 6, 7, 4, 6, 8, 2, 1);
+    const heap = new Heap().add(3, 10, 5, 6, 7, 4, 6, 8, 2, 1);
 
     expect(String(heap)).toBe('10,8,6,7,6,4,5,3,2,1');
     expect(String(heap.delete(4))).toBe('10,8,6,7,6,1,5,3,2');
@@ -95,7 +95,7 @@ describe('Heap', () => {
     const comparator = new Comparator<Tuple>(([a], [b]) =>
       Comparator.defaultCompare(a, b),
     );
-    const heap = new MaxHeap(comparator);
+    const heap = new Heap(comparator);
     heap.add([10], [5], [15], [12], [20], [5]);
 
     expect(String(heap)).toBe('20,15,10,5,12,5');
@@ -103,5 +103,32 @@ describe('Heap', () => {
     expect(String(heap.add([25]))).toBe('25,15,20,5,12,5,10');
     expect(heap.poll()).toEqual([25]);
     expect(String(heap.delete([5]))).toBe('15,12,20,10');
+  });
+});
+
+describe('Heap (min)', () => {
+  it('adds a new value', () => {
+    const heap = new Heap(new Comparator().reverse()).add(10).add(15).add(5);
+
+    expect(heap.peek()).toBe(5);
+    expect(String(heap)).toBe('5,15,10');
+
+    heap.add(8);
+
+    expect(heap.peek()).toBe(5);
+    expect(String(heap)).toBe('5,8,10,15');
+
+    heap.add(3);
+
+    expect(heap.size).toBe(5);
+    expect(heap.peek()).toBe(3);
+    expect(String(heap)).toBe('3,5,10,15,8');
+  });
+
+  it('extracts the root value', () => {
+    const heap = new Heap(new Comparator().reverse()).add(5).add(10).add(15);
+
+    expect(heap.poll()).toBe(5);
+    expect(String(heap)).toBe('10,15');
   });
 });

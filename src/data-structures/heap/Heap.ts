@@ -1,25 +1,25 @@
 import Comparator from '../../utils/Comparator';
 
-export default abstract class Heap<T> {
-  protected container: T[] = [];
+export default class Heap<T> {
+  private container: T[] = [];
 
-  constructor(protected compare = new Comparator<T>()) {}
+  constructor(private compare = new Comparator<T>()) {}
 
-  protected getParentIndex(index: number): number {
+  private getParentIndex(index: number): number {
     return Math.floor((index - 1) / 2);
   }
 
-  protected getChildIndex(index: number): number {
+  private getChildIndex(index: number): number {
     const childIndex = index * 2 + 1;
     return childIndex < this.size ? childIndex : -1;
   }
 
-  protected swap(index1: number, index2: number): void {
+  private swap(index1: number, index2: number): void {
     const arr = this.container;
     [arr[index2], arr[index1]] = [arr[index1], arr[index2]];
   }
 
-  protected heapifyUp(startIndex = this.size - 1): void {
+  private heapifyUp(startIndex = this.size - 1): void {
     const iterate = (index: number): void => {
       const parentIndex = this.getParentIndex(index);
       if (parentIndex === -1) return;
@@ -37,7 +37,7 @@ export default abstract class Heap<T> {
     iterate(startIndex);
   }
 
-  protected heapifyDown(startIndex = 0): void {
+  private heapifyDown(startIndex = 0): void {
     const iterate = (index: number): void => {
       const childIndex = this.getChildIndex(index);
       if (childIndex === -1) return;

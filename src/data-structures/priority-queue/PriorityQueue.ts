@@ -1,8 +1,8 @@
 import Comparator from '../../utils/Comparator';
-import MaxHeap from '../heap/MaxHeap';
+import Heap from '../heap/Heap';
 
 export default class PriorityQueue<T = number> {
-  private container: MaxHeap<T>;
+  private container: Heap<T>;
 
   private priorities = new Map();
 
@@ -14,7 +14,7 @@ export default class PriorityQueue<T = number> {
       return priorityOfA < priorityOfB ? 1 : -1;
     });
 
-    this.container = new MaxHeap(comparator);
+    this.container = new Heap(comparator);
     this.priorities = new Map();
   }
 
