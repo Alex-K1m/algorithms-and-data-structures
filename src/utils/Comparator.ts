@@ -1,12 +1,11 @@
-export type CompareFn<T> = (a: T, b: T) => -1 | 0 | 1;
+import { CompareFn } from './compareFns';
 
-export default class Comparator<T = number> {
-  constructor(private compare: CompareFn<T> = Comparator.defaultCompare) {}
+export default class Comparator<T> {
+  constructor(private compare: CompareFn<T>) {}
 
-  static defaultCompare: CompareFn<any> = (a, b) => {
-    if (a === b) return 0;
-    return a > b ? 1 : -1;
-  };
+  get fn() {
+    return this.compare;
+  }
 
   equal(a: T, b: T): boolean {
     return this.compare(a, b) === 0;

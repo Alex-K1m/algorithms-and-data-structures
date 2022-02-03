@@ -1,15 +1,5 @@
-import { CompareFn } from '../../utils/Comparator';
+import { compareNumbers, compareStringLengths } from '../../utils/compareFns';
 import Sorter from './Sorter';
-
-const compareNumbers: CompareFn<number> = (a, b) => {
-  if (a === b) return 0;
-  return a > b ? 1 : -1;
-};
-
-const compareStringLengths: CompareFn<string> = (
-  { length: a },
-  { length: b },
-) => compareNumbers(a, b);
 
 const shuffled = [3, 5, 4, -1, -4, 2, 0, 1, -2, -5, -3];
 const sorted = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];

@@ -1,4 +1,5 @@
-import Comparator, { CompareFn } from '../../utils/Comparator';
+import Comparator from '../../utils/Comparator';
+import { CompareFn } from '../../utils/compareFns';
 
 export default class BinarySearchTreeNode<T> implements Iterable<T> {
   private compare: Comparator<T>;
@@ -9,7 +10,7 @@ export default class BinarySearchTreeNode<T> implements Iterable<T> {
 
   right: BinarySearchTreeNode<T> | null = null;
 
-  constructor(public value: T, compareFn?: CompareFn<T>) {
+  constructor(public value: T, compareFn: CompareFn<T>) {
     this.compare = new Comparator(compareFn);
   }
 
@@ -36,7 +37,7 @@ export default class BinarySearchTreeNode<T> implements Iterable<T> {
     const side = this.compare.less(value, this.value) ? 'left' : 'right';
 
     if (this[side]) this[side]!.insert(value);
-    else this.setChild(side, new BinarySearchTreeNode(value));
+    else this.setChild(side, new BinarySearchTreeNode(value, this.compare.fn));
 
     return this;
   }

@@ -1,4 +1,5 @@
-import Comparator, { CompareFn } from '../../utils/Comparator';
+import Comparator from '../../utils/Comparator';
+import { CompareFn } from '../../utils/compareFns';
 
 export default class Sorter<T> {
   private compare: Comparator<T>;

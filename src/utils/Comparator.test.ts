@@ -1,8 +1,11 @@
-import Comparator, { CompareFn } from './Comparator';
+import Comparator from './Comparator';
+import { compareNumbers, compareTuples } from './compareFns';
 
 describe('Comparator', () => {
-  it('compares correctly with defaults', () => {
-    const comparator = new Comparator();
+  it('compares numbers correctly', () => {
+    const comparator = new Comparator(compareNumbers);
+
+    expect(comparator.fn).toBe(compareNumbers);
 
     expect(comparator.equal(1, 1)).toBe(true);
     expect(comparator.equal(0, 1)).toBe(false);
@@ -25,7 +28,7 @@ describe('Comparator', () => {
   });
 
   it('compares correctly after reverse', () => {
-    const comparator = new Comparator().reverse();
+    const comparator = new Comparator(compareNumbers).reverse();
 
     expect(comparator.equal(1, 1)).toBe(true);
     expect(comparator.less(1, 0)).toBe(true);
@@ -33,20 +36,12 @@ describe('Comparator', () => {
   });
 
   it('compares correctly with a custom compare fn', () => {
-    interface INode {
-      value: number;
-    }
+    const nodeComparator = new Comparator(compareTuples);
 
-    const nodeCompare: CompareFn<INode> = ({ value: a }, { value: b }) =>
-      Comparator.defaultCompare(a, b);
-    const nodeComparator = new Comparator(nodeCompare);
-
-    expect(nodeComparator.equal({ value: 1 }, { value: 1 })).toBe(true);
-    expect(nodeComparator.less({ value: 0 }, { value: 1 })).toBe(true);
-    expect(nodeComparator.lessOrEqual({ value: 1 }, { value: 1 })).toBe(true);
-    expect(nodeComparator.greater({ value: 1 }, { value: 0 })).toBe(true);
-    expect(nodeComparator.greaterOrEqual({ value: 1 }, { value: 1 })).toBe(
-      true,
-    );
+    expect(nodeComparator.equal([1], [1])).toBe(true);
+    expect(nodeComparator.less([0], [1])).toBe(true);
+    expect(nodeComparator.lessOrEqual([1], [1])).toBe(true);
+    expect(nodeComparator.greater([1], [0])).toBe(true);
+    expect(nodeComparator.greaterOrEqual([1], [1])).toBe(true);
   });
 });

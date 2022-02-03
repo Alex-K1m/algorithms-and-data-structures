@@ -1,9 +1,12 @@
-import { CompareFn } from '../../utils/Comparator';
+import { compareNumbers, compareTuples } from '../../utils/compareFns';
 import BinarySearchTreeNode from './BinarySearchTreeNode';
+
+const createBSTNode = (value: number) =>
+  new BinarySearchTreeNode(value, compareNumbers);
 
 describe('BinarySearchTreeNode', () => {
   it('creates an emtpy node', () => {
-    const node = new BinarySearchTreeNode(1);
+    const node = createBSTNode(1);
 
     expect(node.value).toBe(1);
     expect(node.parent).toBeNull();
@@ -12,7 +15,7 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('inserts a value in a tree', () => {
-    const node = new BinarySearchTreeNode(2).insert(1).insert(4);
+    const node = createBSTNode(2).insert(1).insert(4);
 
     expect(node.value).toBe(2);
     expect(node.left).toBeInstanceOf(BinarySearchTreeNode);
@@ -38,11 +41,7 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('checks for a value in a tree', () => {
-    const node = new BinarySearchTreeNode(2)
-      .insert(1)
-      .insert(4)
-      .insert(0)
-      .insert(3);
+    const node = createBSTNode(2).insert(1).insert(4).insert(0).insert(3);
 
     expect(node.contains(2)).toBe(true);
     expect(node.contains(1)).toBe(true);
@@ -55,40 +54,27 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('is iterable', () => {
-    const node = new BinarySearchTreeNode(2)
-      .insert(1)
-      .insert(4)
-      .insert(0)
-      .insert(3);
+    const node = createBSTNode(2).insert(1).insert(4).insert(0).insert(3);
 
     expect([...node]).toEqual([0, 1, 2, 3, 4]);
   });
 
   it('uses custom compare function', () => {
-    type Node = { value: number };
-    const compareFn: CompareFn<Node> = ({ value: a }, { value: b }) => {
-      if (a === b) return 0;
-      return a > b ? 1 : -1;
-    };
-    const node = new BinarySearchTreeNode({ value: 2 } as Node, compareFn)
-      .insert({ value: 1 })
-      .insert({ value: 4 })
-      .insert({ value: 0 })
-      .insert({ value: 3 });
+    const node = new BinarySearchTreeNode([2], compareTuples)
+      .insert([1])
+      .insert([4])
+      .insert([0])
+      .insert([3]);
 
-    expect(node.value).toEqual({ value: 2 });
-    expect(node.left?.value).toEqual({ value: 1 });
-    expect(node.right?.value).toEqual({ value: 4 });
-    expect(node.left?.left?.value).toEqual({ value: 0 });
-    expect(node.right?.left?.value).toEqual({ value: 3 });
+    expect(node.value).toEqual([2]);
+    expect(node.left?.value).toEqual([1]);
+    expect(node.right?.value).toEqual([4]);
+    expect(node.left?.left?.value).toEqual([0]);
+    expect(node.right?.left?.value).toEqual([3]);
   });
 
   it('finds a node by value', () => {
-    const node = new BinarySearchTreeNode(2)
-      .insert(1)
-      .insert(4)
-      .insert(0)
-      .insert(3);
+    const node = createBSTNode(2).insert(1).insert(4).insert(0).insert(3);
     const nodeFor2 = node.find(2);
 
     expect(nodeFor2).toBeInstanceOf(BinarySearchTreeNode);
@@ -119,12 +105,8 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('finds minimum and maximum', () => {
-    const node = new BinarySearchTreeNode(2)
-      .insert(1)
-      .insert(4)
-      .insert(0)
-      .insert(3);
-    const singleNode = new BinarySearchTreeNode(1);
+    const node = createBSTNode(2).insert(1).insert(4).insert(0).insert(3);
+    const singleNode = createBSTNode(1);
 
     expect(node.findMin()).toBeInstanceOf(BinarySearchTreeNode);
     expect(node.findMin().value).toBe(0);
@@ -137,7 +119,7 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('shows the number of children', () => {
-    const node = new BinarySearchTreeNode(2).insert(1).insert(4).insert(0);
+    const node = createBSTNode(2).insert(1).insert(4).insert(0);
 
     expect(node.getChildrenNumber()).toBe(2);
     expect(node.left?.getChildrenNumber()).toBe(1);
@@ -145,7 +127,7 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it("shows if it's left or right node of its parent", () => {
-    const node = new BinarySearchTreeNode(2).insert(1).insert(4);
+    const node = createBSTNode(2).insert(1).insert(4);
 
     expect(node.side).toBeNull();
     expect(node.left?.side).toBe('left');
@@ -153,9 +135,9 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('sets a child node', () => {
-    const nodeA = new BinarySearchTreeNode(1);
-    const nodeB = new BinarySearchTreeNode(3);
-    const nodeC = new BinarySearchTreeNode(2);
+    const nodeA = createBSTNode(1);
+    const nodeB = createBSTNode(3);
+    const nodeC = createBSTNode(2);
 
     expect(nodeA.setRight(nodeB).right).toBe(nodeB);
     expect(nodeB.parent).toBe(nodeA);
@@ -168,7 +150,7 @@ describe('BinarySearchTreeNode', () => {
   });
 
   it('removes a node by value', () => {
-    const node = new BinarySearchTreeNode(3)
+    const node = createBSTNode(3)
       .insert(1)
       .insert(5)
       .insert(0)

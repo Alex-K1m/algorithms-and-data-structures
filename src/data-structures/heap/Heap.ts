@@ -1,9 +1,14 @@
 import Comparator from '../../utils/Comparator';
+import { CompareFn } from '../../utils/compareFns';
 
 export default class Heap<T> {
   private container: T[] = [];
 
-  constructor(private compare = new Comparator<T>()) {}
+  private compare: Comparator<T>;
+
+  constructor(compareFn: CompareFn<T>) {
+    this.compare = new Comparator(compareFn);
+  }
 
   private getParentIndex(index: number): number {
     return Math.floor((index - 1) / 2);

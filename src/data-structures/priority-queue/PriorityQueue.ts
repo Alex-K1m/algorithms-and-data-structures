@@ -1,4 +1,4 @@
-import Comparator from '../../utils/Comparator';
+import { CompareFn } from '../../utils/compareFns';
 import Heap from '../heap/Heap';
 
 export default class PriorityQueue<T = number> {
@@ -7,14 +7,14 @@ export default class PriorityQueue<T = number> {
   private priorities = new Map();
 
   constructor() {
-    const comparator = new Comparator<T>((a, b) => {
+    const compareFn: CompareFn<T> = (a, b) => {
       const priorityOfA = this.priorities.get(a);
       const priorityOfB = this.priorities.get(b);
       if (priorityOfA === priorityOfB) return 0;
       return priorityOfA < priorityOfB ? 1 : -1;
-    });
+    };
 
-    this.container = new Heap(comparator);
+    this.container = new Heap(compareFn);
     this.priorities = new Map();
   }
 
