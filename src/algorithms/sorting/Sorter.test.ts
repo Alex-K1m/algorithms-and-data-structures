@@ -7,7 +7,13 @@ const reversed = sorted.slice().reverse();
 const shuffledStrings = ['dd', 'aa', 'q', 'a', 'bbbb', 'ccc'];
 const sortedStrings = ['q', 'a', 'dd', 'aa', 'ccc', 'bbbb'];
 
-const allMethods = ['bubble', 'selection', 'insertion', 'heap'] as const;
+const allMethods = [
+  'bubble',
+  'selection',
+  'insertion',
+  'heap',
+  'merge',
+] as const;
 const stableMethods = allMethods.filter((method) => method !== 'heap');
 
 describe('Sorting algorithms work correctly', () => {

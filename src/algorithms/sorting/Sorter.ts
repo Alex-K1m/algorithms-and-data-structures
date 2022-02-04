@@ -73,4 +73,35 @@ export default class Sorter<T> {
       .map(() => maxHeap.poll()!)
       .reverse();
   }
+
+  merge(array: T[]): T[] {
+    if (array.length <= 1) return array;
+
+    const middleIndex = Math.floor(array.length / 2);
+    const left = array.slice(0, middleIndex);
+    const right = array.slice(middleIndex);
+
+    const sortedLeft = this.merge(left);
+    const sortedRight = this.merge(right);
+
+    return this.mergeSortedArrays(sortedLeft, sortedRight);
+  }
+
+  private mergeSortedArrays(left: T[], right: T[]): T[] {
+    let leftIndex = 0;
+    let rightIndex = 0;
+    const result = [];
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (this.compare.lessOrEqual(left[leftIndex], right[rightIndex])) {
+        result.push(left[leftIndex]);
+        leftIndex += 1;
+      } else {
+        result.push(right[rightIndex]);
+        rightIndex += 1;
+      }
+    }
+
+    return [...result, ...left.slice(leftIndex), ...right.slice(rightIndex)];
+  }
 }
