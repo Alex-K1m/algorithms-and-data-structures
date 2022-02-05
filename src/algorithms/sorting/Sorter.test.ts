@@ -13,6 +13,7 @@ const allMethods = [
   'insertion',
   'heap',
   'merge',
+  'quick',
 ] as const;
 const stableMethods = allMethods.filter((method) => method !== 'heap');
 

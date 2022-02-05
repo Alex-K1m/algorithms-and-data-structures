@@ -104,4 +104,24 @@ export default class Sorter<T> {
 
     return [...result, ...left.slice(leftIndex), ...right.slice(rightIndex)];
   }
+
+  quick(array: T[]): T[] {
+    if (array.length <= 1) return array;
+
+    const [pivot] = array;
+    const left: T[] = [];
+    const center: T[] = [];
+    const right: T[] = [];
+
+    array.forEach((item) => {
+      if (this.compare.less(item, pivot)) left.push(item);
+      if (this.compare.equal(item, pivot)) center.push(item);
+      if (this.compare.greater(item, pivot)) right.push(item);
+    });
+
+    const sortedLeft = this.quick(left);
+    const sortedRight = this.quick(right);
+
+    return [...sortedLeft, ...center, ...sortedRight];
+  }
 }
