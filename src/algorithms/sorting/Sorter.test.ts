@@ -7,28 +7,30 @@ const reversed = sorted.slice().reverse();
 const shuffledStrings = ['dd', 'aa', 'q', 'a', 'bbbb', 'ccc'];
 const sortedStrings = ['q', 'a', 'dd', 'aa', 'ccc', 'bbbb'];
 
-const allMethods = [
+const stableMethods = [
   'bubble',
   'selection',
   'insertion',
-  'heap',
   'merge',
   'quick',
 ] as const;
-const stableMethods = allMethods.filter((method) => method !== 'heap');
+const unstableMethods = ['heap', 'shell'] as const;
 
 describe('Sorting algorithms work correctly', () => {
-  test.each(allMethods.map((item) => [item]))('%s sort', (method) => {
-    const sorter = new Sorter(compareNumbers);
+  test.each([...stableMethods, ...unstableMethods].map((item) => [item]))(
+    '%s sort',
+    (method) => {
+      const sorter = new Sorter(compareNumbers);
 
-    expect(sorter[method]([])).toEqual([]);
-    expect(sorter[method]([1])).toEqual([1]);
-    expect(sorter[method]([1, 1, 1])).toEqual([1, 1, 1]);
-    expect(sorter[method](sorted)).toEqual(sorted);
-    expect(sorter[method](reversed)).toEqual(sorted);
-    expect(sorter[method](shuffled)).toEqual(sorted);
-    expect(sorter.reverse()[method](shuffled)).toEqual(reversed);
-  });
+      expect(sorter[method]([])).toEqual([]);
+      expect(sorter[method]([1])).toEqual([1]);
+      expect(sorter[method]([1, 1, 1])).toEqual([1, 1, 1]);
+      expect(sorter[method](sorted)).toEqual(sorted);
+      expect(sorter[method](reversed)).toEqual(sorted);
+      expect(sorter[method](shuffled)).toEqual(sorted);
+      expect(sorter.reverse()[method](shuffled)).toEqual(reversed);
+    },
+  );
 });
 
 describe('Sorting algorithms are stable', () => {

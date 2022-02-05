@@ -124,4 +124,24 @@ export default class Sorter<T> {
 
     return [...sortedLeft, ...center, ...sortedRight];
   }
+
+  shell(array: T[]): T[] {
+    const clone = array.slice();
+    let gap = clone.length;
+
+    do {
+      gap = Math.floor(gap / 2);
+
+      for (let index = 0; index < clone.length - gap; index += 1) {
+        let i = index;
+
+        while (i >= 0 && this.compare.greater(clone[i], clone[i + gap])) {
+          [clone[i], clone[i + gap]] = [clone[i + gap], clone[i]];
+          i -= gap;
+        }
+      }
+    } while (gap > 1);
+
+    return clone;
+  }
 }
