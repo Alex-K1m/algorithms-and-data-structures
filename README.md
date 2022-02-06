@@ -20,6 +20,19 @@ This repo contains implementations of algorithms and data structures written in 
 - Tree
   - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTreeNode.ts) • [test](/src/data-structures/tree/BinarySearchTreeNode.test.ts) • [cheat sheet](#binary-search-tree)
 
+### Algorithms
+
+- [Sorting](/src/algorithms/sorting/Sorter.ts) • [test](/src/algorithms/sorting/Sorter.test.ts) • [cheat sheet](#sorting)
+  - [x] bubble
+  - [x] selection
+  - [x] insertion
+  - [x] heap
+  - [x] merge
+  - [x] quick
+  - [x] shell
+  - [ ] counting
+  - [ ] radix
+
 ## Resources
 
 - [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms) - huge thanks to [@trekhleb](https://github.com/trekhleb) for making such an awesome learning resource!
@@ -220,3 +233,23 @@ Can be used to implement ADTs: tree
 | log n, n | log n, n | log n, n  | log n, n |
 
 [🠕 data-structures](#data-structures)
+
+### Sorting
+
+- **Bubble**: compares adjacent elements and swaps them if they are in the wrong order, repeated until there're no pairs to swap
+- **Selection**: finds a minimum in the 2nd part of the array, puts it at the end of the 1st part, shifting the boundary between the parts
+- **Insertion**: "bubbles" one element at a time by decrementing the index
+- **Heap**: uses a [heap](#heap) data structure to keep unsorted elements, polling the min from the top iteratively to form a sorted list
+- **Merge**: divides the unsorted list into n sublists, each containing one element (considered sorted), then repeatedly merges sublists
+- **Quick**: selects a "pivot" element and partitions the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. Sorts the sub-arrays recursively. _This can be done in-place, requiring small additional amounts of memory O(log(n))_
+- **Shell**: starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between elements to be compared. It can move some out-of-place elements into position faster than a simple nearest neighbor exchange.
+
+| Name      |     Best      |         Average         |            Worst            | Memory | Stable |
+| --------- | :-----------: | :---------------------: | :-------------------------: | :----: | :----: |
+| Bubble    |       n       |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |   +    |
+| Selection | n<sup>2</sup> |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |   +    |
+| Insertion |       n       |      n<sup>2</sup>      |        n<sup>2</sup>        |   1    |   +    |
+| Heap      | n&nbsp;log(n) |      n&nbsp;log(n)      |        n&nbsp;log(n)        |   1    |   -    |
+| Merge     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n&nbsp;log(n)        |   n    |   +    |
+| Quick     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n<sup>2</sup>        | log(n) |   +    |
+| Shell     | n&nbsp;log(n) | depends on gap sequence | n&nbsp;(log(n))<sup>2</sup> |   1    |   -    |
