@@ -9,16 +9,16 @@ This repo contains implementations of algorithms and data structures written in 
 
 ### Data structures
 
-- [x] [Linked list](/src/data-structures/linked-list/LinkedList.js) • [test](/src/data-structures/linked-list/LinkedList.test.js) • [cheat sheet](#linked-list)
-  - [x] [Doubly Linked list](/src/data-structures/doubly-linked-list/DoublyLinkedList.js) • [test](/src/data-structures/doubly-linked-list/DoublyLinkedList.test.js) • [cheat sheet](#doubly-linked-list)
-- [x] [Stack](/src/data-structures/stack/Stack.js) • [test](/src/data-structures/stack/Stack.test.js) • [cheat sheet](#stack)
-- [x] [Queue](/src/data-structures/queue/Queue.js) • [test](/src/data-structures/queue/Queue.test.js) • [cheat sheet](#queue)
-  - [x] [Priority Queue](/src/data-structures/priority-queue/PriorityQueue.js) • [test](/src/data-structures/priority-queue/PriorityQueue.test.js) • [cheat sheet](#priority-queue)
-  - [x] [Deque](/src/data-structures/deque/Deque.js) • [test](/src/data-structures/deque/Deque.test.js) • [cheat sheet](#deque)
-- [x] [Hash table](/src/data-structures/hash-table/HashTable.js) • [test](/src/data-structures/hash-table/HashTable.test.js) • [cheat sheet](#hash-table)
-- [x] [Heap](/src/data-structures/heap/Heap.js) • [test](/src/data-structures/heap/Heap.test.js) • [cheat sheet](#heap)
+- [x] [Linked list](/src/data-structures/linked-list/LinkedList.ts) • [test](/src/data-structures/linked-list/LinkedList.test.ts) • [cheat sheet](#linked-list)
+  - [x] [Doubly Linked list](/src/data-structures/doubly-linked-list/DoublyLinkedList.ts) • [test](/src/data-structures/doubly-linked-list/DoublyLinkedList.test.ts) • [cheat sheet](#doubly-linked-list)
+- [x] [Stack](/src/data-structures/stack/Stack.ts) • [test](/src/data-structures/stack/Stack.test.ts) • [cheat sheet](#stack)
+- [x] [Queue](/src/data-structures/queue/Queue.ts) • [test](/src/data-structures/queue/Queue.test.ts) • [cheat sheet](#queue)
+  - [x] [Priority Queue](/src/data-structures/priority-queue/PriorityQueue.ts) • [test](/src/data-structures/priority-queue/PriorityQueue.test.ts) • [cheat sheet](#priority-queue)
+  - [x] [Deque](/src/data-structures/deque/Deque.ts) • [test](/src/data-structures/deque/Deque.test.ts) • [cheat sheet](#deque)
+- [x] [Hash table](/src/data-structures/hash-table/HashTable.ts) • [test](/src/data-structures/hash-table/HashTable.test.ts) • [cheat sheet](#hash-table)
+- [x] [Heap](/src/data-structures/heap/Heap.ts) • [test](/src/data-structures/heap/Heap.test.ts) • [cheat sheet](#heap)
 - Tree
-  - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTreeNode.js) • [test](/src/data-structures/tree/BinarySearchTreeNode.test.js) • [cheat sheet](#binary-search-tree)
+  - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTreeNode.ts) • [test](/src/data-structures/tree/BinarySearchTreeNode.test.ts) • [cheat sheet](#binary-search-tree)
 
 ## Resources
 
