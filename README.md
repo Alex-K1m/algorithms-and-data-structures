@@ -18,7 +18,7 @@ This repo contains implementations of algorithms and data structures written in 
 - [x] [Hash table](/src/data-structures/hash-table/HashTable.ts) • [test](/src/data-structures/hash-table/HashTable.test.ts) • [cheat sheet](#hash-table)
 - [x] [Heap](/src/data-structures/heap/Heap.ts) • [test](/src/data-structures/heap/Heap.test.ts) • [cheat sheet](#heap)
 - Tree
-  - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTreeNode.ts) • [test](/src/data-structures/tree/BinarySearchTreeNode.test.ts) • [cheat sheet](#binary-search-tree)
+  - [x] [Binary search tree](/src/data-structures/tree/BinarySearchTree.ts) • [test](/src/data-structures/tree/BinarySearchTree.test.ts) • [cheat sheet](#binary-search-tree)
 
 ### Algorithms
 
