@@ -35,3 +35,8 @@ overrides:
       project: tsconfig.json
     rules:
       '@typescript-eslint/indent': off
+
+  - files: ['*.test.ts?(x)']
+    rules:
+      '@typescript-eslint/dot-notation': off
+      prefer-destructuring: off
