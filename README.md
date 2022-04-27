@@ -30,7 +30,7 @@ This repo contains implementations of algorithms and data structures written in 
   - [x] merge
   - [x] quick
   - [x] shell
-  - [ ] counting
+  - [x] counting
   - [ ] radix
 
 ## Resources
@@ -243,6 +243,7 @@ Can be used to implement ADTs: tree
 - **Merge**: divides the unsorted list into n sublists, each containing one element (considered sorted), then repeatedly merges sublists
 - **Quick**: selects a "pivot" element and partitions the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. Sorts the sub-arrays recursively. _This can be done in-place, requiring small additional amounts of memory O(log(n))_
 - **Shell**: starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between elements to be compared. It can move some out-of-place elements into position faster than a simple nearest neighbor exchange.
+- **Counting**: works with positive integers; calculates frequencies and then uses arithmetic to determine the positions of each value in the output sequence. Works best when the range of numbers (r) for each sequence element is very small. Often used as a subroutine in radix sort.
 
 | Name      |     Best      |         Average         |            Worst            | Memory | Stable |
 | --------- | :-----------: | :---------------------: | :-------------------------: | :----: | :----: |
@@ -253,3 +254,4 @@ Can be used to implement ADTs: tree
 | Merge     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n&nbsp;log(n)        |   n    |   +    |
 | Quick     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n<sup>2</sup>        | log(n) |   +    |
 | Shell     | n&nbsp;log(n) | depends on gap sequence | n&nbsp;(log(n))<sup>2</sup> |   1    |   -    |
+| Counting  |     n + r     |          n + r          |            n + r            | n + r  |   +    |
