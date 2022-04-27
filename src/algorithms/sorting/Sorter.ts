@@ -144,4 +144,26 @@ export default class Sorter<T> {
 
     return clone;
   }
+
+  /** The original algorithm is a bit more complicated */
+  counting(array: number[]): number[] {
+    const isValid = array.every(
+      (item) => item >= 0 && Number.isSafeInteger(item),
+    );
+
+    if (!isValid)
+      throw new Error('The counting sort only works with positive integers');
+
+    const frequencies = array.reduce((acc, item) => {
+      acc[item] = (acc[item] ?? 0) + 1;
+      return acc;
+    }, [] as number[]);
+
+    const sorted = frequencies.reduce((acc, count, item) => {
+      acc.length += count;
+      return acc.fill(item, acc.length - count);
+    }, [] as number[]);
+
+    return sorted;
+  }
 }
