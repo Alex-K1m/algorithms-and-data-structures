@@ -144,28 +144,4 @@ export default class Sorter<T> {
 
     return clone;
   }
-
-  /** The original algorithm is a bit more complicated */
-  counting(array: number[]): number[] {
-    const isValid = array.every((item) => Number.isSafeInteger(item));
-
-    if (!isValid) throw new Error('The counting sort only works with integers');
-
-    const sorted: number[] = [];
-    const min = Math.min(...array);
-    const max = Math.max(...array);
-
-    const frequencies = array.reduce((acc, item) => {
-      acc[item] = (acc[item] ?? 0) + 1;
-      return acc;
-    }, {} as Record<number, number>);
-
-    for (let item = min; item <= max; item += 1) {
-      const count = frequencies[item] ?? 0;
-      sorted.length += count;
-      sorted.fill(item, sorted.length - count);
-    }
-
-    return sorted;
-  }
 }

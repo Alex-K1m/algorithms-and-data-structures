@@ -1,5 +1,5 @@
 import { compareNumbers, compareStringLengths } from '../../utils/compareFns';
-import Sorter from './Sorter';
+import Sorter from './ComparisonSorter';
 
 const shuffled = [3, 5, 4, -1, -4, 2, 0, 1, -2, -5, -3];
 const sorted = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
@@ -31,18 +31,6 @@ describe('Sorting algorithms work correctly', () => {
       expect(sorter.reverse()[method](shuffled)).toEqual(reversed);
     },
   );
-
-  test('counting sort', () => {
-    const sorter = new Sorter(compareNumbers);
-
-    expect(sorter.counting([])).toEqual([]);
-    expect(sorter.counting([1])).toEqual([1]);
-    expect(sorter.counting([1, 1, 1])).toEqual([1, 1, 1]);
-    expect(sorter.counting(sorted)).toEqual(sorted);
-    expect(sorter.counting(reversed)).toEqual(sorted);
-    expect(sorter.counting(shuffled)).toEqual(sorted);
-    expect(() => sorter.counting([1.1, 1])).toThrow();
-  });
 });
 
 describe('Sorting algorithms are stable', () => {
