@@ -1,8 +1,8 @@
 import { compareNumbers, compareStringLengths } from '../../utils/compareFns';
 import Sorter from './Sorter';
 
-const shuffled = [6, 8, 7, 3, 1, 9, 0, 5, 2, 4];
-const sorted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const shuffled = [3, 5, 4, -1, -4, 2, 0, 1, -2, -5, -3];
+const sorted = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
 const reversed = sorted.slice().reverse();
 const shuffledStrings = ['dd', 'aa', 'q', 'a', 'bbbb', 'ccc'];
 const sortedStrings = ['q', 'a', 'dd', 'aa', 'ccc', 'bbbb'];
@@ -33,17 +33,15 @@ describe('Sorting algorithms work correctly', () => {
   );
 
   test('counting sort', () => {
-    const shuffledPositiveInts = [6, 8, 7, 3, 1, 9, 0, 5, 2, 4];
-    const sortedPositiveInts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const reversedPositiveInts = sortedPositiveInts.slice().reverse();
     const sorter = new Sorter(compareNumbers);
 
     expect(sorter.counting([])).toEqual([]);
     expect(sorter.counting([1])).toEqual([1]);
     expect(sorter.counting([1, 1, 1])).toEqual([1, 1, 1]);
-    expect(sorter.counting(sortedPositiveInts)).toEqual(sortedPositiveInts);
-    expect(sorter.counting(reversedPositiveInts)).toEqual(sortedPositiveInts);
-    expect(sorter.counting(shuffledPositiveInts)).toEqual(sortedPositiveInts);
+    expect(sorter.counting(sorted)).toEqual(sorted);
+    expect(sorter.counting(reversed)).toEqual(sorted);
+    expect(sorter.counting(shuffled)).toEqual(sorted);
+    expect(() => sorter.counting([1.1, 1])).toThrow();
   });
 });
 
