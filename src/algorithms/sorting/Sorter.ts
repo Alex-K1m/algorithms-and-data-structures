@@ -144,4 +144,49 @@ export default class Sorter<T> {
 
     return clone;
   }
+
+  static counting<K>(array: K[], iteratee: (item: K) => number): K[] {
+    const values = array.map(iteratee);
+    const isValid = values.every((value) => Number.isSafeInteger(value));
+
+    if (!isValid)
+      throw new Error('The iteratee should return only integer values');
+
+    const sorted: K[] = [];
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+
+    const frequencies = array.reduce((acc, item, i) => {
+      const value = values[i];
+      if (acc[value]) acc[value].push(item);
+      else acc[value] = [item];
+      return acc;
+    }, {} as Record<number, K[]>);
+
+    for (let value = min; value <= max; value += 1) {
+      const items = frequencies[value] ?? [];
+      sorted.push(...items);
+    }
+
+    return sorted;
+  }
+
+  static radix(array: number[]): number[] {
+    const isValid = array.every((item) => Number.isSafeInteger(item));
+
+    if (!isValid) throw new Error('The radix sort only works with integers');
+
+    const max = Math.max(...array);
+    const maxDigits = String(Math.abs(max)).length;
+
+    return Array.from({ length: maxDigits })
+      .map((_, i) => i + 1)
+      .reduce(
+        (partiallySorted, digit) =>
+          Sorter.counting<number>(partiallySorted, (n) =>
+            Math.trunc((n % 10 ** digit) / 10 ** (digit - 1)),
+          ),
+        array,
+      );
+  }
 }

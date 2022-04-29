@@ -1,8 +1,8 @@
 import { compareNumbers, compareStringLengths } from '../../utils/compareFns';
-import Sorter from './ComparisonSorter';
+import Sorter from './Sorter';
 
-const shuffled = [3, 5, 4, -1, -4, 2, 0, 1, -2, -5, -3];
-const sorted = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+const shuffled = [1324, 5, -24, -1, 983, -9326, -561, 49, 0, -79, 831];
+const sorted = [-9326, -561, -79, -24, -1, 0, 5, 49, 831, 983, 1324];
 const reversed = sorted.slice().reverse();
 const shuffledStrings = ['dd', 'aa', 'q', 'a', 'bbbb', 'ccc'];
 const sortedStrings = ['q', 'a', 'dd', 'aa', 'ccc', 'bbbb'];
@@ -31,6 +31,30 @@ describe('Sorting algorithms work correctly', () => {
       expect(sorter.reverse()[method](shuffled)).toEqual(reversed);
     },
   );
+
+  test('counting sort', () => {
+    const countingSort = (array: number[]) => Sorter.counting(array, (n) => n);
+
+    expect(countingSort([])).toEqual([]);
+    expect(countingSort([1])).toEqual([1]);
+    expect(countingSort([1, 1, 1])).toEqual([1, 1, 1]);
+    expect(countingSort(sorted)).toEqual(sorted);
+    expect(countingSort(reversed)).toEqual(sorted);
+    expect(countingSort(shuffled)).toEqual(sorted);
+
+    expect(() => countingSort([1.1, 1])).toThrow();
+  });
+
+  test('radix sort', () => {
+    expect(Sorter.radix([])).toEqual([]);
+    expect(Sorter.radix([1])).toEqual([1]);
+    expect(Sorter.radix([1, 1, 1])).toEqual([1, 1, 1]);
+    expect(Sorter.radix(sorted)).toEqual(sorted);
+    expect(Sorter.radix(reversed)).toEqual(sorted);
+    expect(Sorter.radix(shuffled)).toEqual(sorted);
+
+    expect(() => Sorter.radix([1.1, 1])).toThrow();
+  });
 });
 
 describe('Sorting algorithms are stable', () => {
@@ -38,5 +62,12 @@ describe('Sorting algorithms are stable', () => {
     const strLengthsSorter = new Sorter(compareStringLengths);
 
     expect(strLengthsSorter[method](shuffledStrings)).toEqual(sortedStrings);
+  });
+
+  test('counting sort', () => {
+    const strLengthsCountingSort = (array: string[]) =>
+      Sorter.counting(array, (str) => str.length);
+
+    expect(strLengthsCountingSort(shuffledStrings)).toEqual(sortedStrings);
   });
 });
