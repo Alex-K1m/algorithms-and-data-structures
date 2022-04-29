@@ -3,9 +3,15 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore: ['*.md', LICENSE, .gitignore, .husky/**]
   pull_request:
     branches: [main]
+    paths-ignore: ['*.md', LICENSE, .gitignore, .husky/**]
   workflow_dispatch:
+
+env:
+  HUSKY: 0
+  NODE_VERSION: 16
 
 jobs:
   lint:
@@ -18,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install
@@ -39,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install
@@ -58,7 +64,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install
