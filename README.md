@@ -22,16 +22,18 @@ This repo contains implementations of algorithms and data structures written in 
 
 ### Algorithms
 
-- [Sorting](/src/algorithms/sorting/Sorter.ts) • [test](/src/algorithms/sorting/Sorter.test.ts) • [cheat sheet](#sorting)
-  - [x] bubble
-  - [x] selection
-  - [x] insertion
-  - [x] heap
-  - [x] merge
-  - [x] quick
-  - [x] shell
-  - [x] counting
-  - [ ] radix
+- Sorting • [cheat sheet](#sorting)
+  - [Comparison sorting](/src/algorithms/sorting/ComparisonSorter.ts) • [test](/src/algorithms/sorting/ComparisonSorter.test.ts)
+    - [x] bubble
+    - [x] selection
+    - [x] insertion
+    - [x] heap
+    - [x] merge
+    - [x] quick
+    - [x] shell
+  - [Non-comparison sorting](/src/algorithms/sorting/NonComparisonSorter.ts) • [test](/src/algorithms/sorting/NonComparisonSorter.test.ts)
+    - [x] counting
+    - [ ] radix
 
 ## Resources
 
@@ -255,3 +257,5 @@ Can be used to implement ADTs: tree
 | Quick     | n&nbsp;log(n) |      n&nbsp;log(n)      |        n<sup>2</sup>        | log(n) |   +    |
 | Shell     | n&nbsp;log(n) | depends on gap sequence | n&nbsp;(log(n))<sup>2</sup> |   1    |   -    |
 | Counting  |     n + r     |          n + r          |            n + r            | n + r  |   +    |
+
+[🠕 algorithms](#algorithms)
