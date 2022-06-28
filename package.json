@@ -4,12 +4,10 @@
   "private": true,
   "description": "My implementations of some data structures and algorithms written while learning",
   "license": "ISC",
-  "repository": "git@github.com:Alex-K1m/algorithms-and-data-structures.git",
-  "author": "Alex Kim <45559664+Alex-K1m@users.noreply.github.com>",
-  "bugs": "https://github.com/Alex-K1m/algorithms-and-data-structures/issues",
-  "engines": {
-    "node": ">=14"
-  },
+  "repository": "git@github.com:alex-kim-dev/algorithms-and-data-structures.git",
+  "author": "Alex Kim (https://github.com/alex-kim-dev)",
+  "homepage": "https://alex-kim-dev.github.io/algorithms-and-data-structures#readme",
+  "bugs": "https://github.com/alex-kim-dev/algorithms-and-data-structures/issues",
   "scripts": {
     "format": "prettier --ignore-path .gitignore --check \"**/*.{html,json,yml,md}\"",
     "lint": "eslint --cache --ignore-path .gitignore ./src",
