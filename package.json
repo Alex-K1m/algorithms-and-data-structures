@@ -11,15 +11,13 @@
     "node": ">=14"
   },
   "scripts": {
-    "format": "prettier --ignore-path .gitignore --check \"**/*.{json,yml,yaml,md}\"",
-    "format:fix": "npm run format -- --write",
-    "lint": "eslint ./src",
-    "lint:fix": "npm run format -- --fix",
+    "format": "prettier --ignore-path .gitignore --check \"**/*.{html,json,yml,md}\"",
+    "lint": "eslint --cache --ignore-path .gitignore ./src",
     "prepare": "husky install",
     "start": "nodemon src/index.ts",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "jest --watch",
+    "test:ci": "jest --ci",
+    "test:cov": "jest --coverage",
     "typecheck": "tsc"
   },
   "devDependencies": {
