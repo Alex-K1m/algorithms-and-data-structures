@@ -5,6 +5,6 @@
   - tsc-files --noEmit
 
 '!(*test).{j,t}s':
-  - jest --findRelatedTests
+  - jest --findRelatedTests --passWithNoTests
 
-'*.{json,yml,yaml,md}': prettier --write
+'*.{html,json,yml,md}': prettier --write
