@@ -156,12 +156,15 @@ export default class Sorter<T> {
     const min = Math.min(...values);
     const max = Math.max(...values);
 
-    const frequencies = array.reduce((acc, item, i) => {
-      const value = values[i];
-      if (acc[value]) acc[value].push(item);
-      else acc[value] = [item];
-      return acc;
-    }, {} as Record<number, K[]>);
+    const frequencies = array.reduce(
+      (acc, item, i) => {
+        const value = values[i];
+        if (acc[value]) acc[value].push(item);
+        else acc[value] = [item];
+        return acc;
+      },
+      {} as Record<number, K[]>,
+    );
 
     for (let value = min; value <= max; value += 1) {
       const items = frequencies[value] ?? [];

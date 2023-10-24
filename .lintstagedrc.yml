@@ -5,6 +5,6 @@
   - tsc-files --noEmit
 
 '!(*test).{j,t}s':
-  - jest --findRelatedTests --passWithNoTests
+  - vitest related --run --passWithNoTests
 
 '*.{html,json,yml,md}': prettier --write

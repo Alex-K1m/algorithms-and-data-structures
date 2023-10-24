@@ -1,7 +1,10 @@
 export default class LinkedListNode<T> {
   private _next: LinkedListNode<T> | null;
 
-  constructor(public readonly value: T, next?: LinkedListNode<T>) {
+  constructor(
+    public readonly value: T,
+    next?: LinkedListNode<T>,
+  ) {
     this._next = next ?? null;
   }
 
