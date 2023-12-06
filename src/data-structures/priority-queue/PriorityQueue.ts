@@ -4,12 +4,12 @@ import Heap from '../heap/Heap';
 export default class PriorityQueue<T = number> {
   private container: Heap<T>;
 
-  private priorities = new Map();
+  private priorities = new Map<T, number>();
 
   constructor() {
     const compareFn: CompareFn<T> = (a, b) => {
-      const priorityOfA = this.priorities.get(a);
-      const priorityOfB = this.priorities.get(b);
+      const priorityOfA = this.priorities.get(a)!;
+      const priorityOfB = this.priorities.get(b)!;
       if (priorityOfA === priorityOfB) return 0;
       return priorityOfA < priorityOfB ? 1 : -1;
     };
@@ -38,7 +38,7 @@ export default class PriorityQueue<T = number> {
 
   dequeue(): T | undefined {
     const value = this.container.poll();
-    this.priorities.delete(value);
+    if (value) this.priorities.delete(value);
     return value;
   }
 

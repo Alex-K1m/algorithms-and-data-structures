@@ -23,6 +23,7 @@ export default class HashTable {
     const bucket = this.buckets[this._hash(key)];
     const node = bucket.find((pair) => pair[0] === key);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     if (node) node.value[1] = value;
     else bucket.prepend([key, value]);
 
