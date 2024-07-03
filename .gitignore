@@ -1,4 +1,8 @@
 /node_modules/
 /coverage/
+/.vscode/
+/dist/
 *.log
+.env
+.local
 .eslintcache

@@ -7,4 +7,5 @@
 '!(*test).{j,t}s':
   - vitest related --run --passWithNoTests
 
-'*.{html,json,yml,md}': prettier --write
+'*.{js,ts,html,json,yml,md}':
+  - prettier --write

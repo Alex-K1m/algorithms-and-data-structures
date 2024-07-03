@@ -19,68 +19,64 @@ env:
 
 jobs:
   lint:
-    name: Lint & format
+    name: Format, lint, typecheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: pnpm
 
       - name: Install
         id: install
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
+        run: pnpm install
 
       - name: Format
+        run: pnpm run lint
+
+      - name: Lint
         if: always() && steps.install.outcome == 'success'
-        run: npm run format
-
-  typecheck:
-    name: Check types
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install
-        run: npm ci
+        run: pnpm run lint
 
       - name: Typecheck
-        run: npm run typecheck
+        if: always() && steps.install.outcome == 'success'
+        run: pnpm run typecheck
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: pnpm
 
       - name: Install
-        run: npm ci
+        run: pnpm install
 
       - name: Test
-        run: npm run test:cov
+        run: pnpm run test:cov
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
+          fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
