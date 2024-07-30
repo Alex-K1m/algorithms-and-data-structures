@@ -1,15 +1,15 @@
-import Heap from '~/data-structures/heap/Heap';
+import { Heap } from '~/data-structures/heap/Heap';
 import { Comparator, type CompareFn } from '~/utils/Comparator';
 
-export default class Sorter<T> {
-  private compare: Comparator<T>;
+export class Sorter<T> {
+  #compare: Comparator<T>;
 
-  constructor(compareFn: CompareFn<T>) {
-    this.compare = new Comparator(compareFn);
+  constructor(compareFn?: CompareFn<T>) {
+    this.#compare = new Comparator(compareFn);
   }
 
   reverse(): this {
-    this.compare.reverse();
+    this.#compare.reverse();
     return this;
   }
 
@@ -21,8 +21,8 @@ export default class Sorter<T> {
       swapped = false;
 
       for (let j = 0; j < clone.length - 1; j += 1) {
-        if (this.compare.greater(clone[j], clone[j + 1])) {
-          [clone[j], clone[j + 1]] = [clone[j + 1], clone[j]];
+        if (this.#compare.greater(clone[j]!, clone[j + 1]!)) {
+          [clone[j], clone[j + 1]] = [clone[j + 1]!, clone[j]!];
           swapped = true;
         }
       }
@@ -40,12 +40,12 @@ export default class Sorter<T> {
       let indexOfMin = i;
 
       for (let j = i + 1; j < clone.length; j += 1) {
-        if (this.compare.greater(clone[indexOfMin], clone[j])) {
+        if (this.#compare.greater(clone[indexOfMin]!, clone[j]!)) {
           indexOfMin = j;
         }
       }
 
-      [clone[i], clone[indexOfMin]] = [clone[indexOfMin], clone[i]];
+      [clone[i], clone[indexOfMin]] = [clone[indexOfMin]!, clone[i]!];
     }
 
     return clone;
@@ -57,8 +57,8 @@ export default class Sorter<T> {
     for (let index = 1; index < clone.length; index += 1) {
       let i = index;
 
-      while (i > 0 && this.compare.greater(clone[i - 1], clone[i])) {
-        [clone[i - 1], clone[i]] = [clone[i], clone[i - 1]];
+      while (i > 0 && this.#compare.greater(clone[i - 1]!, clone[i]!)) {
+        [clone[i - 1], clone[i]] = [clone[i]!, clone[i - 1]!];
         i -= 1;
       }
     }
@@ -67,7 +67,7 @@ export default class Sorter<T> {
   }
 
   heap(array: T[]): T[] {
-    const maxHeap = new Heap(this.compare.fn).add(...array);
+    const maxHeap = new Heap(this.#compare.fn).add(...array);
     return Array.from({ length: maxHeap.size })
       .map(() => maxHeap.poll()!)
       .reverse();
@@ -89,14 +89,14 @@ export default class Sorter<T> {
   private mergeSortedArrays(left: T[], right: T[]): T[] {
     let leftIndex = 0;
     let rightIndex = 0;
-    const result = [];
+    const result: T[] = [];
 
     while (leftIndex < left.length && rightIndex < right.length) {
-      if (this.compare.lessOrEqual(left[leftIndex], right[rightIndex])) {
-        result.push(left[leftIndex]);
+      if (this.#compare.lessOrEqual(left[leftIndex]!, right[rightIndex]!)) {
+        result.push(left[leftIndex]!);
         leftIndex += 1;
       } else {
-        result.push(right[rightIndex]);
+        result.push(right[rightIndex]!);
         rightIndex += 1;
       }
     }
@@ -107,15 +107,15 @@ export default class Sorter<T> {
   quick(array: T[]): T[] {
     if (array.length <= 1) return array;
 
-    const [pivot] = array;
+    const pivot = array[0]!;
     const left: T[] = [];
     const center: T[] = [];
     const right: T[] = [];
 
     array.forEach((item) => {
-      if (this.compare.less(item, pivot)) left.push(item);
-      if (this.compare.equal(item, pivot)) center.push(item);
-      if (this.compare.greater(item, pivot)) right.push(item);
+      if (this.#compare.less(item, pivot)) left.push(item);
+      if (this.#compare.equal(item, pivot)) center.push(item);
+      if (this.#compare.greater(item, pivot)) right.push(item);
     });
 
     const sortedLeft = this.quick(left);
@@ -134,8 +134,8 @@ export default class Sorter<T> {
       for (let index = 0; index < clone.length - gap; index += 1) {
         let i = index;
 
-        while (i >= 0 && this.compare.greater(clone[i], clone[i + gap])) {
-          [clone[i], clone[i + gap]] = [clone[i + gap], clone[i]];
+        while (i >= 0 && this.#compare.greater(clone[i]!, clone[i + gap]!)) {
+          [clone[i], clone[i + gap]] = [clone[i + gap]!, clone[i]!];
           i -= gap;
         }
       }
@@ -155,15 +155,12 @@ export default class Sorter<T> {
     const min = Math.min(...values);
     const max = Math.max(...values);
 
-    const frequencies = array.reduce(
-      (acc, item, i) => {
-        const value = values[i];
-        if (acc[value]) acc[value].push(item);
-        else acc[value] = [item];
-        return acc;
-      },
-      {} as Record<number, K[]>,
-    );
+    const frequencies = array.reduce<Record<number, K[]>>((acc, item, i) => {
+      const value = values[i]!;
+      if (acc[value]) acc[value].push(item);
+      else acc[value] = [item];
+      return acc;
+    }, {});
 
     for (let value = min; value <= max; value += 1) {
       const items = frequencies[value] ?? [];

@@ -1,5 +1,5 @@
-export default class BinarySearchTreeNode<T> {
-  private _value: T;
+export class BinarySearchTreeNode<T> {
+  #value: T;
 
   private _parent: BinarySearchTreeNode<T> | null = null;
 
@@ -8,11 +8,11 @@ export default class BinarySearchTreeNode<T> {
   private _right: BinarySearchTreeNode<T> | null = null;
 
   constructor(value: T) {
-    this._value = value;
+    this.#value = value;
   }
 
   get value(): T {
-    return this._value;
+    return this.#value;
   }
 
   get parent(): BinarySearchTreeNode<T> | undefined {
@@ -28,7 +28,7 @@ export default class BinarySearchTreeNode<T> {
   }
 
   setValue(value: T): this {
-    this._value = value;
+    this.#value = value;
     return this;
   }
 

@@ -1,28 +1,33 @@
-import { Comparator, type CompareFn } from '../../utils/Comparator';
-import BinarySearchTreeNode from './BinarySearchTreeNode';
+import { Comparator, type CompareFn } from '~/utils/Comparator';
 
-export default class BinarySearchTree<T> implements Iterable<T> {
-  private compare: Comparator<T>;
+import { BinarySearchTreeNode } from './BinarySearchTreeNode';
 
-  private root: BinarySearchTreeNode<T> | null;
+export class BinarySearchTree<T> implements Iterable<T> {
+  #compare: Comparator<T>;
 
-  constructor(compareFn: CompareFn<T>, node?: BinarySearchTreeNode<T>) {
-    this.compare = new Comparator(compareFn);
-    this.root = node ?? null;
+  #root: BinarySearchTreeNode<T> | null;
+
+  constructor(compareFn?: CompareFn<T>, node?: BinarySearchTreeNode<T>) {
+    this.#compare = new Comparator(compareFn);
+    this.#root = node ?? null;
   }
 
   static createNode<T>(value: T): BinarySearchTreeNode<T> {
     return new BinarySearchTreeNode(value);
   }
 
+  get root(): BinarySearchTreeNode<T> | null {
+    return this.#root;
+  }
+
   insert(value: T): this {
-    if (!this.root) {
-      this.root = BinarySearchTree.createNode(value);
+    if (!this.#root) {
+      this.#root = BinarySearchTree.createNode(value);
       return this;
     }
 
     const iter = (node: BinarySearchTreeNode<T>): void => {
-      const side = this.compare.less(value, node.value) ? 'left' : 'right';
+      const side = this.#compare.less(value, node.value) ? 'left' : 'right';
       const child = node[side];
 
       if (child) iter(child);
@@ -33,43 +38,43 @@ export default class BinarySearchTree<T> implements Iterable<T> {
       }
     };
 
-    iter(this.root);
+    iter(this.#root);
     return this;
   }
 
   find(value: T): BinarySearchTreeNode<T> | undefined {
-    if (!this.root) return undefined;
+    if (!this.#root) return undefined;
 
     const iter = (
       node: BinarySearchTreeNode<T>,
     ): BinarySearchTreeNode<T> | undefined => {
-      if (this.compare.equal(value, node.value)) return node;
+      if (this.#compare.equal(value, node.value)) return node;
 
-      const child = this.compare.less(value, node.value)
+      const child = this.#compare.less(value, node.value)
         ? node.left
         : node.right;
       return child ? iter(child) : undefined;
     };
 
-    return iter(this.root);
+    return iter(this.#root);
   }
 
   findMin(): BinarySearchTreeNode<T> | undefined {
-    if (!this.root) return undefined;
+    if (!this.#root) return undefined;
 
     const iter = (node: BinarySearchTreeNode<T>): BinarySearchTreeNode<T> =>
       !node.left ? node : iter(node.left);
 
-    return iter(this.root);
+    return iter(this.#root);
   }
 
   findMax(): BinarySearchTreeNode<T> | undefined {
-    if (!this.root) return undefined;
+    if (!this.#root) return undefined;
 
     const iter = (node: BinarySearchTreeNode<T>): BinarySearchTreeNode<T> =>
       !node.right ? node : iter(node.right);
 
-    return iter(this.root);
+    return iter(this.#root);
   }
 
   contains(value: T): boolean {
@@ -82,8 +87,8 @@ export default class BinarySearchTree<T> implements Iterable<T> {
 
     if (!node) return this;
 
-    if (this.root!.getChildrenNumber() === 0) {
-      this.root = null;
+    if (this.#root!.getChildrenNumber() === 0) {
+      this.#root = null;
       return this;
     }
 
@@ -102,7 +107,7 @@ export default class BinarySearchTree<T> implements Iterable<T> {
 
         node.parent?.setLink(node, child);
         child.setParent(node.parent ?? null);
-        if (!node.parent) this.root = child;
+        if (!node.parent) this.#root = child;
         node.setParent(null).setLeft(null).setRight(null);
 
         break;
@@ -111,11 +116,11 @@ export default class BinarySearchTree<T> implements Iterable<T> {
       case 2: {
         /** Node with the next bigger value */
         const nextNode = new BinarySearchTree(
-          this.compare.fn,
+          this.#compare.fn,
           node.right,
         ).findMin() as BinarySearchTreeNode<T>;
 
-        if (!this.compare.equal(nextNode.value, node.right!.value)) {
+        if (!this.#compare.equal(nextNode.value, node.right!.value)) {
           this.remove(nextNode.value);
           node.setValue(nextNode.value);
           break;
@@ -135,7 +140,7 @@ export default class BinarySearchTree<T> implements Iterable<T> {
   }
 
   *[Symbol.iterator](): Generator<T> {
-    if (!this.root) return;
+    if (!this.#root) return;
 
     function* iter(node: BinarySearchTreeNode<T>): Generator<T> {
       if (node.left) yield* iter(node.left);
@@ -143,6 +148,6 @@ export default class BinarySearchTree<T> implements Iterable<T> {
       if (node.right) yield* iter(node.right);
     }
 
-    yield* iter(this.root);
+    yield* iter(this.#root);
   }
 }

@@ -1,4 +1,4 @@
-import PriorityQueue from './PriorityQueue';
+import { PriorityQueue } from './PriorityQueue';
 
 describe('PriorityQueue', () => {
   it('creates an empty queue', () => {

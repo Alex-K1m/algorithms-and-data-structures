@@ -1,4 +1,4 @@
-import HashTable, { Pair } from './HashTable';
+import { HashTable, type Pair } from './HashTable';
 
 describe('HashTable', () => {
   const pairs: Pair[] = [
@@ -12,10 +12,10 @@ describe('HashTable', () => {
 
   beforeEach(() => {
     filledHashTable = new HashTable()
-      .set(...pairs[0])
-      .set(...pairs[1])
-      .set(...pairs[2])
-      .set(...pairs[3]);
+      .set(...pairs[0]!)
+      .set(...pairs[1]!)
+      .set(...pairs[2]!)
+      .set(...pairs[3]!);
   });
 
   it('generates proper hashes for keys', () => {
@@ -44,9 +44,9 @@ describe('HashTable', () => {
 
     const emptyHashTable = new HashTable();
     const hashTable = new HashTable()
-      .set(...entries[0])
-      .set(...entries[1])
-      .set(...entries[2]);
+      .set(...entries[0]!)
+      .set(...entries[1]!)
+      .set(...entries[2]!);
 
     expect(String(emptyHashTable)).toBe('');
     expect(String(hashTable)).toBe(expected);

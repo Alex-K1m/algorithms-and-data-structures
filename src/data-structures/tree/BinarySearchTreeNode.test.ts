@@ -1,4 +1,4 @@
-import BinarySearchTreeNode from './BinarySearchTreeNode';
+import { BinarySearchTreeNode } from './BinarySearchTreeNode';
 
 test('BinarySearchTreeNode methods work correctly', () => {
   const node = new BinarySearchTreeNode(1);

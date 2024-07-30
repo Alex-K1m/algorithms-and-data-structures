@@ -1,11 +1,11 @@
-import LinkedListNode from './LinkedListNode';
+import { LinkedListNode } from './LinkedListNode';
 
 function createList<T>(
   values: T[],
-): [LinkedListNode<T>, LinkedListNode<T>] | [] {
+): [first: LinkedListNode<T>, last: LinkedListNode<T>] | [] {
   if (values.length < 1) return [];
 
-  const lastNode = new LinkedListNode(values[values.length - 1]);
+  const lastNode = new LinkedListNode(values[values.length - 1] as T);
   const firstNode = values
     .slice(0, -1)
     .reduceRight((next, value) => new LinkedListNode(value, next), lastNode);
@@ -13,42 +13,42 @@ function createList<T>(
   return [firstNode, lastNode];
 }
 
-export default class LinkedList<T> implements Iterable<T> {
+export class LinkedList<T> implements Iterable<T> {
   static createNode<T>(value: T, next?: LinkedListNode<T>): LinkedListNode<T> {
     return new LinkedListNode(value, next);
   }
 
-  private _head: LinkedListNode<T> | null;
+  #head: LinkedListNode<T> | null;
 
-  private _last: typeof this._head;
+  #last: LinkedListNode<T> | null;
 
   constructor(list: T[] | LinkedListNode<T> = []) {
     if (list instanceof LinkedListNode) {
-      this._head = list;
-      this._last = (function iterate(node): LinkedListNode<T> {
+      this.#head = list;
+      this.#last = (function iterate(node): LinkedListNode<T> {
         return node.next ? iterate(node.next) : node;
       })(list);
       return;
     }
 
     const [head, last] = createList(list);
-    this._head = head ?? null;
-    this._last = last ?? null;
+    this.#head = head ?? null;
+    this.#last = last ?? null;
   }
 
   get head(): LinkedListNode<T> | undefined {
-    return this._head ?? undefined;
+    return this.#head ?? undefined;
   }
 
   get last(): LinkedListNode<T> | undefined {
-    return this._last ?? undefined;
+    return this.#last ?? undefined;
   }
 
   clear(): [LinkedListNode<T> | undefined, LinkedListNode<T> | undefined] {
-    const head = this._head;
-    const last = this._last;
-    this._head = null;
-    this._last = null;
+    const head = this.#head;
+    const last = this.#last;
+    this.#head = null;
+    this.#last = null;
     return [head ?? undefined, last ?? undefined];
   }
 
@@ -64,9 +64,9 @@ export default class LinkedList<T> implements Iterable<T> {
       LinkedListNode<T>,
     ];
 
-    if (this.isEmpty()) this._last = lastNodeToPrepend;
+    if (this.isEmpty()) this.#last = lastNodeToPrepend;
     lastNodeToPrepend.setNext(this.head ?? null);
-    this._head = newHead;
+    this.#head = newHead;
 
     return this;
   }
@@ -79,9 +79,9 @@ export default class LinkedList<T> implements Iterable<T> {
       LinkedListNode<T>,
     ];
 
-    if (!this.last) this._head = firstNodeToAppend;
+    if (!this.last) this.#head = firstNodeToAppend;
     else this.last.setNext(firstNodeToAppend);
-    this._last = newLast;
+    this.#last = newLast;
 
     return this;
   }
@@ -104,7 +104,7 @@ export default class LinkedList<T> implements Iterable<T> {
     if (!this.head?.next) return this.clear()[0];
 
     const { head } = this;
-    this._head = head.setNext(null) ?? null;
+    this.#head = head.setNext(null) ?? null;
     return head;
   }
 
@@ -115,7 +115,7 @@ export default class LinkedList<T> implements Iterable<T> {
       node: LinkedListNode<T>,
     ): LinkedListNode<T> | undefined => {
       if (node.next === this.last) {
-        this._last = node;
+        this.#last = node;
         return node.setNext(null);
       }
       return iterate(node.next!);

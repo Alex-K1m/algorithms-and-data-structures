@@ -1,11 +1,11 @@
-import DoublyLinkedListNode from './DoublyLinkedListNode';
+import { DoublyLinkedListNode } from './DoublyLinkedListNode';
 
 function createList<T>(
   values: T[],
-): [DoublyLinkedListNode<T>, DoublyLinkedListNode<T>] | [] {
+): [first: DoublyLinkedListNode<T>, last: DoublyLinkedListNode<T>] | [] {
   if (values.length < 1) return [];
 
-  const lastNode = new DoublyLinkedListNode(values[values.length - 1]);
+  const lastNode = new DoublyLinkedListNode(values[values.length - 1] as T);
   const firstNode = values.slice(0, -1).reduceRight((next, value) => {
     const node = new DoublyLinkedListNode(value, next);
     next.setPrev(node);
@@ -15,7 +15,7 @@ function createList<T>(
   return [firstNode, lastNode];
 }
 
-export default class DoublyLinkedList<T> implements Iterable<T> {
+export class DoublyLinkedList<T> implements Iterable<T> {
   static createNode<T>(
     value: T,
     next?: DoublyLinkedListNode<T>,
@@ -24,40 +24,40 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     return new DoublyLinkedListNode(value, next, prev);
   }
 
-  private _head: DoublyLinkedListNode<T> | null;
+  #head: DoublyLinkedListNode<T> | null;
 
-  private _last: typeof this._head;
+  #last: DoublyLinkedListNode<T> | null;
 
   constructor(list: T[] | DoublyLinkedListNode<T> = []) {
     if (list instanceof DoublyLinkedListNode) {
-      this._head = list;
-      this._last = (function iterate(node): DoublyLinkedListNode<T> {
+      this.#head = list;
+      this.#last = (function iterate(node): DoublyLinkedListNode<T> {
         return node.next ? iterate(node.next) : node;
       })(list);
       return;
     }
 
     const [head, last] = createList(list);
-    this._head = head ?? null;
-    this._last = last ?? null;
+    this.#head = head ?? null;
+    this.#last = last ?? null;
   }
 
   get head(): DoublyLinkedListNode<T> | undefined {
-    return this._head ?? undefined;
+    return this.#head ?? undefined;
   }
 
   get last(): DoublyLinkedListNode<T> | undefined {
-    return this._last ?? undefined;
+    return this.#last ?? undefined;
   }
 
   clear(): [
     DoublyLinkedListNode<T> | undefined,
     DoublyLinkedListNode<T> | undefined,
   ] {
-    const head = this._head;
-    const last = this._last;
-    this._head = null;
-    this._last = null;
+    const head = this.#head;
+    const last = this.#last;
+    this.#head = null;
+    this.#last = null;
     return [head ?? undefined, last ?? undefined];
   }
 
@@ -73,10 +73,10 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
       DoublyLinkedListNode<T>,
     ];
 
-    if (this.isEmpty()) this._last = lastNodeToPrepend;
+    if (this.isEmpty()) this.#last = lastNodeToPrepend;
     lastNodeToPrepend.setNext(this.head ?? null);
     this.head?.setPrev(lastNodeToPrepend);
-    this._head = newHead;
+    this.#head = newHead;
 
     return this;
   }
@@ -89,12 +89,12 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
       DoublyLinkedListNode<T>,
     ];
 
-    if (!this.last) this._head = firstNodeToAppend;
+    if (!this.last) this.#head = firstNodeToAppend;
     else {
       this.last.setNext(firstNodeToAppend);
       firstNodeToAppend.setPrev(this.last);
     }
-    this._last = newLast;
+    this.#last = newLast;
 
     return this;
   }
@@ -110,7 +110,7 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
       node?: DoublyLinkedListNode<T>,
     ): DoublyLinkedListNode<T> | undefined => {
       if (!node) return undefined;
-      return this.equals(valueOrCb, node.value) ? node : iterate(node?.next);
+      return this.equals(valueOrCb, node.value) ? node : iterate(node.next);
     };
     return iterate(this.head);
   }
@@ -119,7 +119,7 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     if (!this.head?.next) return this.clear()[0];
 
     const { head } = this;
-    this._head = head.setNext(null) ?? null;
+    this.#head = head.setNext(null) ?? null;
     head.setPrev(null);
     this.head.setPrev(null);
     return head;
@@ -129,7 +129,7 @@ export default class DoublyLinkedList<T> implements Iterable<T> {
     if (!this.last?.prev) return this.clear()[1];
 
     const { last } = this;
-    this._last = last.setPrev(null) ?? null;
+    this.#last = last.setPrev(null) ?? null;
     last.setNext(null);
     this.last.setNext(null);
     return last;

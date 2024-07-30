@@ -1,4 +1,4 @@
-import Deque from './Deque';
+import { Deque } from './Deque';
 
 describe('Deque', () => {
   it('creates an empty deque', () => {

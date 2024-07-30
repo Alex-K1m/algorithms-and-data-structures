@@ -1,20 +1,20 @@
-export default class LinkedListNode<T> {
-  private _next: LinkedListNode<T> | null;
+export class LinkedListNode<T> {
+  #next: LinkedListNode<T> | null;
 
   constructor(
     public readonly value: T,
     next?: LinkedListNode<T>,
   ) {
-    this._next = next ?? null;
+    this.#next = next ?? null;
   }
 
   get next(): LinkedListNode<T> | undefined {
-    return this._next ?? undefined;
+    return this.#next ?? undefined;
   }
 
   setNext(node: LinkedListNode<T> | null): LinkedListNode<T> | undefined {
     const ref = this.next;
-    this._next = node;
+    this.#next = node;
     return ref;
   }
 

@@ -4,7 +4,7 @@ import {
   compareTuples,
 } from '~/utils/Comparator';
 
-import Heap from './Heap';
+import { Heap } from './Heap';
 
 const createMaxHeap = () => new Heap(compareNumbers);
 const reversedCompareNumbers: CompareFn<number> = (a, b) =>

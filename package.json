@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "format": "prettier --check . \"!pnpm-lock.yaml\"",
-    "lint": "eslint --cache src",
+    "lint": "eslint src",
     "prepare": "husky",
     "start": "tsx --watch src/index.ts",
     "test": "vitest",

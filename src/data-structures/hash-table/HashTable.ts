@@ -1,37 +1,33 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { LinkedList } from '~/data-structures/linked-list/LinkedList';
 
-import LinkedList from '../linked-list/LinkedList';
+export type Pair = [string, unknown];
 
-export type Pair = [string, any];
-
-export default class HashTable {
-  private buckets: Array<LinkedList<Pair>>;
+export class HashTable {
+  #buckets: Array<LinkedList<Pair>>;
 
   constructor() {
-    this.buckets = Array.from({ length: 10 }, () => new LinkedList());
+    this.#buckets = Array.from({ length: 10 }, () => new LinkedList());
   }
 
   _hash(key: string): number {
     const sumOfCodes = [...key]
       .map((char) => char.charCodeAt(0))
       .reduce((sum, code) => sum + code);
-    return sumOfCodes % this.buckets.length;
+    return sumOfCodes % this.#buckets.length;
   }
 
-  set(key: string, value: any): this {
-    const bucket = this.buckets[this._hash(key)];
+  set(key: string, value: unknown): this {
+    const bucket = this.#buckets[this._hash(key)]!;
     const node = bucket.find((pair) => pair[0] === key);
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     if (node) node.value[1] = value;
     else bucket.prepend([key, value]);
 
     return this;
   }
 
-  get(key: string): any {
-    const bucket = this.buckets[this._hash(key)];
+  get(key: string): unknown {
+    const bucket = this.#buckets[this._hash(key)]!;
     const node = bucket.find((pair) => pair[0] === key);
     return node?.value[1];
   }
@@ -41,7 +37,7 @@ export default class HashTable {
   }
 
   delete(key: string): this {
-    const bucket = this.buckets[this._hash(key)];
+    const bucket = this.#buckets[this._hash(key)]!;
     bucket.delete((pair) => pair?.[0] === key);
     return this;
   }
@@ -49,9 +45,9 @@ export default class HashTable {
   // TODO get key/value/entries
 
   [Symbol.toPrimitive](): string {
-    const items = this.buckets
+    const items = this.#buckets
       .flatMap((list) => [...list])
-      .map(([key, value]) => `  ${key} => ${value}`)
+      .map(([key, value]) => `  ${key} => ${String(value)}`)
       .join('\n');
 
     if (!items.includes('=>')) return ''; // check this._keys instead

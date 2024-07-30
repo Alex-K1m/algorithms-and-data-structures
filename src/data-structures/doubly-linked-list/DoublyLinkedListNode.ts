@@ -1,30 +1,30 @@
-export default class DoublyLinkedListNode<T> {
-  private _prev: DoublyLinkedListNode<T> | null;
+export class DoublyLinkedListNode<T> {
+  #prev: DoublyLinkedListNode<T> | null;
 
-  private _next: DoublyLinkedListNode<T> | null;
+  #next: DoublyLinkedListNode<T> | null;
 
   constructor(
     public readonly value: T,
     next?: DoublyLinkedListNode<T>,
     prev?: DoublyLinkedListNode<T>,
   ) {
-    this._next = next ?? null;
-    this._prev = prev ?? null;
+    this.#next = next ?? null;
+    this.#prev = prev ?? null;
   }
 
   get next(): DoublyLinkedListNode<T> | undefined {
-    return this._next ?? undefined;
+    return this.#next ?? undefined;
   }
 
   get prev(): DoublyLinkedListNode<T> | undefined {
-    return this._prev ?? undefined;
+    return this.#prev ?? undefined;
   }
 
   setNext(
     node: DoublyLinkedListNode<T> | null,
   ): DoublyLinkedListNode<T> | undefined {
     const ref = this.next;
-    this._next = node;
+    this.#next = node;
     return ref;
   }
 
@@ -32,7 +32,7 @@ export default class DoublyLinkedListNode<T> {
     node: DoublyLinkedListNode<T> | null,
   ): DoublyLinkedListNode<T> | undefined {
     const ref = this.prev;
-    this._prev = node;
+    this.#prev = node;
     return ref;
   }
 

@@ -1,7 +1,7 @@
 import { compareNumbers, compareTuples } from '~/utils/Comparator';
 
-import BinarySearchTree from './BinarySearchTree';
-import BinarySearchTreeNode from './BinarySearchTreeNode';
+import { BinarySearchTree } from './BinarySearchTree';
+import { BinarySearchTreeNode } from './BinarySearchTreeNode';
 
 const createTree = (...values: number[]) => {
   const tree = new BinarySearchTree(compareNumbers);
@@ -11,7 +11,7 @@ const createTree = (...values: number[]) => {
 
 describe('BinarySearchTree', () => {
   it('creates an emtpy tree', () => {
-    const root = createTree()['root'];
+    const { root } = createTree();
 
     expect(root?.value).toBeUndefined();
     expect(root?.parent).toBeUndefined();
@@ -21,7 +21,7 @@ describe('BinarySearchTree', () => {
 
   it('inserts a value in a tree', () => {
     const tree = createTree(2, 1, 4);
-    const root = tree['root'];
+    const { root } = tree;
 
     expect(root?.value).toBe(2);
     expect(root?.left?.value).toBe(1);
@@ -63,12 +63,12 @@ describe('BinarySearchTree', () => {
   });
 
   it('uses a custom compare function', () => {
-    const root = new BinarySearchTree(compareTuples)
+    const { root } = new BinarySearchTree(compareTuples)
       .insert([2])
       .insert([1])
       .insert([4])
       .insert([0])
-      .insert([3])['root'];
+      .insert([3]);
 
     expect(root?.value).toEqual([2]);
     expect(root?.left?.value).toEqual([1]);
@@ -91,7 +91,7 @@ describe('BinarySearchTree', () => {
 
     expect(nodeFor4).toBeInstanceOf(BinarySearchTreeNode);
     expect(nodeFor4?.value).toBe(4);
-    expect(nodeFor4?.parent).toBe(tree['root']);
+    expect(nodeFor4?.parent).toBe(tree.root);
     expect(nodeFor4?.left?.value).toBe(3);
     expect(nodeFor4?.right).toBeUndefined();
 
@@ -99,7 +99,7 @@ describe('BinarySearchTree', () => {
 
     expect(nodeFor0).toBeInstanceOf(BinarySearchTreeNode);
     expect(nodeFor0?.value).toBe(0);
-    expect(nodeFor0?.parent).toBe(tree['root']?.left);
+    expect(nodeFor0?.parent).toBe(tree.root?.left);
     expect(nodeFor0?.left).toBeUndefined();
     expect(nodeFor0?.right).toBeUndefined();
 
@@ -130,76 +130,76 @@ describe('BinarySearchTree', () => {
 
   it('removes a node by value', () => {
     const tree = createTree(3, 1, 5, 0, 2, 4, 6);
-    // the root node could change during a remove op, so use tree['root']
+    // the root node could change during a remove op, so use tree.root
 
     tree.remove(3);
 
-    expect(tree['root']?.value).toBe(4);
-    expect(tree['root']?.left?.value).toBe(1);
-    expect(tree['root']?.right?.value).toBe(5);
-    expect(tree['root']?.parent).toBeUndefined();
-    expect(tree['root']?.right?.left).toBeUndefined();
+    expect(tree.root?.value).toBe(4);
+    expect(tree.root?.left?.value).toBe(1);
+    expect(tree.root?.right?.value).toBe(5);
+    expect(tree.root?.parent).toBeUndefined();
+    expect(tree.root?.right?.left).toBeUndefined();
     // 4
     // 1   5
     // 0 2   6
 
     tree.remove(1);
 
-    expect(tree['root']?.left?.value).toBe(2);
-    expect(tree['root']?.left?.left?.value).toBe(0);
-    expect(tree['root']?.left?.right).toBeUndefined();
-    expect(tree['root']?.left?.parent).toBe(tree['root']);
+    expect(tree.root?.left?.value).toBe(2);
+    expect(tree.root?.left?.left?.value).toBe(0);
+    expect(tree.root?.left?.right).toBeUndefined();
+    expect(tree.root?.left?.parent).toBe(tree.root);
     // 4
     // 2   5
     // 0     6
 
     tree.remove(4);
 
-    expect(tree['root']?.value).toBe(5);
-    expect(tree['root']?.left?.value).toBe(2);
-    expect(tree['root']?.right?.value).toBe(6);
-    expect(tree['root']?.parent).toBeUndefined();
-    expect(tree['root']?.right?.parent).toBe(tree['root']);
+    expect(tree.root?.value).toBe(5);
+    expect(tree.root?.left?.value).toBe(2);
+    expect(tree.root?.right?.value).toBe(6);
+    expect(tree.root?.parent).toBeUndefined();
+    expect(tree.root?.right?.parent).toBe(tree.root);
     // 5
     // 2   6
     // 0
 
     tree.remove(2);
 
-    expect(tree['root']?.left?.value).toBe(0);
-    expect(tree['root']?.left?.left).toBeUndefined();
-    expect(tree['root']?.left?.right).toBeUndefined();
-    expect(tree['root']?.left?.parent).toBe(tree['root']);
+    expect(tree.root?.left?.value).toBe(0);
+    expect(tree.root?.left?.left).toBeUndefined();
+    expect(tree.root?.left?.right).toBeUndefined();
+    expect(tree.root?.left?.parent).toBe(tree.root);
     // 5
     // 0   6
 
     tree.remove(6);
 
-    expect(tree['root']?.right).toBeUndefined();
+    expect(tree.root?.right).toBeUndefined();
     // 5
     // 0
 
     tree.remove(5);
 
-    expect(tree['root']?.value).toBe(0);
-    expect(tree['root']?.left).toBeUndefined();
-    expect(tree['root']?.right).toBeUndefined();
-    expect(tree['root']?.parent).toBeUndefined();
+    expect(tree.root?.value).toBe(0);
+    expect(tree.root?.left).toBeUndefined();
+    expect(tree.root?.right).toBeUndefined();
+    expect(tree.root?.parent).toBeUndefined();
     // 0
 
     tree.insert(1).remove(0);
 
-    expect(tree['root']?.value).toBe(1);
+    expect(tree.root?.value).toBe(1);
 
     tree.remove(-1);
 
-    expect(tree['root']?.value).toBe(1);
-    expect(tree['root']?.left).toBeUndefined();
-    expect(tree['root']?.right).toBeUndefined();
-    expect(tree['root']?.parent).toBeUndefined();
+    expect(tree.root?.value).toBe(1);
+    expect(tree.root?.left).toBeUndefined();
+    expect(tree.root?.right).toBeUndefined();
+    expect(tree.root?.parent).toBeUndefined();
 
     tree.remove(1);
 
-    expect(tree['root']?.value).toBeUndefined();
+    expect(tree.root?.value).toBeUndefined();
   });
 });

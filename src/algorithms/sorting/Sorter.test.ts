@@ -1,6 +1,6 @@
-import { compareNumbers, compareStringLengths } from '~/utils/Comparator';
+import { compareStringLengths } from '~/utils/Comparator';
 
-import Sorter from './Sorter';
+import { Sorter } from './Sorter';
 
 const shuffled = [1324, 5, -24, -1, 983, -9326, -561, 49, 0, -79, 831];
 const sorted = [-9326, -561, -79, -24, -1, 0, 5, 49, 831, 983, 1324];
@@ -21,7 +21,7 @@ describe('Sorting algorithms work correctly', () => {
   test.each([...stableMethods, ...unstableMethods].map((item) => [item]))(
     '%s sort',
     (method) => {
-      const sorter = new Sorter(compareNumbers);
+      const sorter = new Sorter();
 
       expect(sorter[method]([])).toEqual([]);
       expect(sorter[method]([1])).toEqual([1]);
