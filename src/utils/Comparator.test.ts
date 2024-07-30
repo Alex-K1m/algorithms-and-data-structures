@@ -1,5 +1,4 @@
-import Comparator from './Comparator';
-import { compareNumbers, compareTuples } from './compareFns';
+import { Comparator, compareNumbers, compareTuples } from './Comparator';
 
 describe('Comparator', () => {
   it('compares numbers correctly', () => {

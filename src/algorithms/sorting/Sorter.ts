@@ -1,6 +1,5 @@
-import Heap from '../../data-structures/heap/Heap';
-import Comparator from '../../utils/Comparator';
-import { CompareFn } from '../../utils/compareFns';
+import Heap from '~/data-structures/heap/Heap';
+import { Comparator, type CompareFn } from '~/utils/Comparator';
 
 export default class Sorter<T> {
   private compare: Comparator<T>;

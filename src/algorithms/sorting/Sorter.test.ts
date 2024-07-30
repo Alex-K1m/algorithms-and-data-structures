@@ -1,4 +1,5 @@
-import { compareNumbers, compareStringLengths } from '../../utils/compareFns';
+import { compareNumbers, compareStringLengths } from '~/utils/Comparator';
+
 import Sorter from './Sorter';
 
 const shuffled = [1324, 5, -24, -1, 983, -9326, -561, 49, 0, -79, 831];

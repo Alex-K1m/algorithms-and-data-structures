@@ -1,4 +1,5 @@
-import { compareNumbers, compareTuples } from '../../utils/compareFns';
+import { compareNumbers, compareTuples } from '~/utils/Comparator';
+
 import BinarySearchTree from './BinarySearchTree';
 import BinarySearchTreeNode from './BinarySearchTreeNode';
 

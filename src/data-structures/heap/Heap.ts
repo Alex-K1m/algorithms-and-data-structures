@@ -1,5 +1,4 @@
-import Comparator from '../../utils/Comparator';
-import { CompareFn } from '../../utils/compareFns';
+import { Comparator, type CompareFn } from '../../utils/Comparator';
 
 export default class Heap<T> {
   private container: T[] = [];

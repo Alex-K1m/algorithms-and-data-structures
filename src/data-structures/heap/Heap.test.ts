@@ -1,8 +1,9 @@
 import {
-  CompareFn,
+  type CompareFn,
   compareNumbers,
   compareTuples,
-} from '../../utils/compareFns';
+} from '~/utils/Comparator';
+
 import Heap from './Heap';
 
 const createMaxHeap = () => new Heap(compareNumbers);

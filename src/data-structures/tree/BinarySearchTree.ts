@@ -1,5 +1,4 @@
-import Comparator from '../../utils/Comparator';
-import type { CompareFn } from '../../utils/compareFns';
+import { Comparator, type CompareFn } from '../../utils/Comparator';
 import BinarySearchTreeNode from './BinarySearchTreeNode';
 
 export default class BinarySearchTree<T> implements Iterable<T> {

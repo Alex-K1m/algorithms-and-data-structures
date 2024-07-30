@@ -1,4 +1,5 @@
-import { CompareFn } from '../../utils/compareFns';
+import type { CompareFn } from '~/utils/Comparator';
+
 import Heap from '../heap/Heap';
 
 export default class PriorityQueue<T = number> {
