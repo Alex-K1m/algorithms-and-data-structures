@@ -19,7 +19,13 @@
     "noEmit": true,
 
     /* If your code doesn't run in the DOM: */
-    "lib": ["ESNext"]
+    "lib": ["ESNext"],
+
+    /* path aliases */
+    "baseUrl": "src",
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
   "include": ["src", "*.js", "*.ts"]
 }
